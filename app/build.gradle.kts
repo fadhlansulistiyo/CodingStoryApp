@@ -45,4 +45,27 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // dataStore
+    implementation(libs.androidx.datastore.preferences)
+
+    // viewModel & liveData
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.androidx.activity.ktx)
+
+    // retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.logging.interceptor)
+
+    // lifecycle Scope
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+
+    // Glide&image
+    implementation(libs.glide)
+    implementation(libs.circleimageview)
+
+    // pixel rotation
+    implementation(libs.androidx.exifinterface)
 }
