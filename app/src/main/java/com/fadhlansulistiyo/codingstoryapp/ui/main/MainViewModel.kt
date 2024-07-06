@@ -9,7 +9,5 @@ import com.fadhlansulistiyo.codingstoryapp.data.model.UserModel
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val repository: UserRepository) : ViewModel() {
-    fun getSession(): LiveData<UserModel> {
-        return repository.getSession().asLiveData()
-    }
+    fun getSession(): LiveData<UserModel> = repository.getSession().asLiveData()
 }

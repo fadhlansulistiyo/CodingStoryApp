@@ -1,10 +1,11 @@
 package com.fadhlansulistiyo.codingstoryapp.data
 
-import androidx.lifecycle.liveData
 import com.fadhlansulistiyo.codingstoryapp.data.model.UserModel
 import com.fadhlansulistiyo.codingstoryapp.data.pref.UserPreference
+import com.fadhlansulistiyo.codingstoryapp.data.response.ErrorResponse
 import com.fadhlansulistiyo.codingstoryapp.data.response.LoginResponse
 import com.fadhlansulistiyo.codingstoryapp.data.response.RegisterResponse
+import com.fadhlansulistiyo.codingstoryapp.data.response.StoryResponse
 import com.fadhlansulistiyo.codingstoryapp.data.retrofit.ApiService
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
@@ -14,7 +15,33 @@ class UserRepository private constructor(
     private val userPreference: UserPreference,
     private val apiService: ApiService
 ) {
-    /*Session*/
+    suspend fun register(name: String, email: String, password: String): RegisterResponse {
+        return try {
+            apiService.register(name, email, password)
+        } catch (e: HttpException) {
+            throw handleHttpException(e)
+        }
+    }
+
+    suspend fun login(email: String, password: String): LoginResponse {
+        return try {
+            val response = apiService.login(email, password)
+            val token = response.loginResult?.token.toString()
+            saveSession(UserModel(email, token))
+            response
+        } catch (e: HttpException) {
+            throw handleHttpException(e)
+        }
+    }
+
+    suspend fun getStories(): StoryResponse {
+        return try {
+            apiService.getStories()
+        } catch (e: HttpException) {
+            throw handleHttpException(e)
+        }
+    }
+
     private suspend fun saveSession(user: UserModel) {
         userPreference.saveSession(user)
     }
@@ -27,30 +54,10 @@ class UserRepository private constructor(
         userPreference.logout()
     }
 
-    fun register(name: String, email: String, password: String) = liveData {
-        emit(ResultState.Loading)
-        try {
-            val successResponse = apiService.register(name, email, password)
-            emit(ResultState.Success(successResponse))
-        } catch (e: HttpException) {
-            val errorBody = e.response()?.errorBody()?.string()
-            val errorResponse = Gson().fromJson(errorBody, RegisterResponse::class.java)
-            emit(ResultState.Error(errorResponse.message))
-        }
-    }
-
-    fun login(email: String, password: String) = liveData {
-        emit(ResultState.Loading)
-        try {
-            val response = apiService.login(email, password)
-            val token = response.loginResult?.token.toString()
-            saveSession(UserModel(email, token))
-            emit(ResultState.Success(response))
-        } catch (e: HttpException) {
-            val errorBody = e.response()?.errorBody()?.string()
-            val errorResponse = Gson().fromJson(errorBody, LoginResponse::class.java)
-            emit(ResultState.Error(errorResponse.message.toString()))
-        }
+    private fun handleHttpException(e: HttpException): Exception {
+        val errorBody = e.response()?.errorBody()?.string()
+        val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
+        return Exception(errorResponse.message.toString())
     }
 
     companion object {

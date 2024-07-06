@@ -23,7 +23,7 @@ class ViewModelFactory(private val repository: UserRepository) :
             modelClass.isAssignableFrom(RegisterViewModel::class.java) -> RegisterViewModel(repository) as T
             modelClass.isAssignableFrom(DetailViewModel::class.java) -> DetailViewModel(repository) as T
             modelClass.isAssignableFrom(AddStoryViewModel::class.java) -> AddStoryViewModel(repository) as T
-            modelClass.isAssignableFrom(HomeViewModel::class.java) -> AddStoryViewModel(repository) as T
+            modelClass.isAssignableFrom(HomeViewModel::class.java) -> HomeViewModel(repository) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }

@@ -7,11 +7,25 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeActivity">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_story"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/message_welcome"
-        android:gravity="center" />
+        android:clipToPadding="false"
+        android:padding="8dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/item_story"/>
+
+    <ProgressBar
+        android:id="@+id/main_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_logout"
@@ -32,6 +46,7 @@
         android:contentDescription="@string/add_story"
         android:foregroundGravity="bottom"
         app:fabSize="normal"
+        app:layout_anchor="@id/recycler_view_story"
         app:layout_anchorGravity="bottom|end"
         app:srcCompat="@drawable/ic_add" />
 

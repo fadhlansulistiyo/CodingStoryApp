@@ -34,15 +34,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.getSession().observe(this) { user ->
-            if (!user.isLogin) {
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
-                finish()
-            } else {
-                val intent = Intent(this, HomeActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
+            val intent = Intent(
+                this,
+                if (user.isLogin) HomeActivity::class.java else LoginActivity::class.java
+            )
+            startActivity(intent)
+            finish()
         }
     }
 
