@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.fadhlansulistiyo.codingstoryapp.data.response.ListStoryItem
 import com.fadhlansulistiyo.codingstoryapp.databinding.ItemStoryBinding
-import com.fadhlansulistiyo.codingstoryapp.ui.detailstory.DetailStoryActivity
+import com.fadhlansulistiyo.codingstoryapp.ui.detailstory.DetailStoriesActivity
 
 class ListStoryAdapter : ListAdapter<ListStoryItem, ListStoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
@@ -23,8 +23,8 @@ class ListStoryAdapter : ListAdapter<ListStoryItem, ListStoryAdapter.MyViewHolde
                 .into(binding.imgItemPhoto)
 
             itemView.setOnClickListener {
-                Intent(itemView.context, DetailStoryActivity::class.java).apply {
-                    putExtra(DetailStoryActivity.EXTRA_ID, item.id)
+                Intent(itemView.context, DetailStoriesActivity::class.java).apply {
+                    putExtra(DetailStoriesActivity.EXTRA_ID, item.id)
                 }.run {
                     itemView.context.startActivity(this)
                 }

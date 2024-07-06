@@ -1,5 +1,6 @@
 package com.fadhlansulistiyo.codingstoryapp.ui.register
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -16,6 +17,7 @@ import com.fadhlansulistiyo.codingstoryapp.databinding.ActivityRegisterBinding
 import com.fadhlansulistiyo.codingstoryapp.ui.ViewModelFactory
 import com.fadhlansulistiyo.codingstoryapp.ui.login.LoginActivity
 import com.fadhlansulistiyo.codingstoryapp.ui.util.isValidEmail
+import com.google.android.material.snackbar.Snackbar
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -69,7 +71,7 @@ class RegisterActivity : AppCompatActivity() {
 
                         is ResultState.Success -> {
                             showLoading(false)
-                            showToast(result.data.message)
+                            showSnackbar(this, result.data.message)
                             Log.d("RegisterActivity", result.data.message)
 
                             // if success
@@ -95,6 +97,14 @@ class RegisterActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+    }
+
+    private fun showSnackbar(activity: Activity, message: String) {
+        Snackbar.make(
+            activity.findViewById(android.R.id.content),
+            message,
+            Snackbar.LENGTH_SHORT
+        ).show()
     }
 
     private fun showLoading(isLoading: Boolean) {

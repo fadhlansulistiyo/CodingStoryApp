@@ -1,7 +1,7 @@
 package com.fadhlansulistiyo.codingstoryapp.data.retrofit
 
 import com.fadhlansulistiyo.codingstoryapp.data.response.AddStoryResponse
-import com.fadhlansulistiyo.codingstoryapp.data.response.DetailResponse
+import com.fadhlansulistiyo.codingstoryapp.data.response.DetailStoriesResponse
 import com.fadhlansulistiyo.codingstoryapp.data.response.LoginResponse
 import com.fadhlansulistiyo.codingstoryapp.data.response.RegisterResponse
 import com.fadhlansulistiyo.codingstoryapp.data.response.StoryResponse
@@ -35,9 +35,9 @@ interface ApiService {
     suspend fun getStories(): StoryResponse
 
     @GET("stories/{id}")
-    suspend fun getDetailStory(
+    suspend fun getDetailStories(
         @Path("id") id: String
-    ): DetailResponse
+    ): DetailStoriesResponse
 
     @Multipart
     @POST("stories")

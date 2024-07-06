@@ -2,6 +2,7 @@ package com.fadhlansulistiyo.codingstoryapp.data
 
 import com.fadhlansulistiyo.codingstoryapp.data.model.UserModel
 import com.fadhlansulistiyo.codingstoryapp.data.pref.UserPreference
+import com.fadhlansulistiyo.codingstoryapp.data.response.DetailStoriesResponse
 import com.fadhlansulistiyo.codingstoryapp.data.response.ErrorResponse
 import com.fadhlansulistiyo.codingstoryapp.data.response.LoginResponse
 import com.fadhlansulistiyo.codingstoryapp.data.response.RegisterResponse
@@ -37,6 +38,14 @@ class UserRepository private constructor(
     suspend fun getStories(): StoryResponse {
         return try {
             apiService.getStories()
+        } catch (e: HttpException) {
+            throw handleHttpException(e)
+        }
+    }
+
+    suspend fun getDetailStories(id: String): DetailStoriesResponse {
+        return try {
+            apiService.getDetailStories(id)
         } catch (e: HttpException) {
             throw handleHttpException(e)
         }

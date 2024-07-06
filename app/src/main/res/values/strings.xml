@@ -18,4 +18,7 @@
     <string name="photo">Photo of Detail Story</string>
     <string name="dummy_name">Fadhlan Sulistiyo</string>
     <string name="dummy_description">This is Description</string>
+    <string name="share">Share</string>
+    <string name="detail_user_avatar">Detail User Photo</string>
+    <string name="dummy_date">01-01-2024</string>
 </resources>
