@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">CodingStoryApp</string>
+    <string name="login_title_dashboard">Dicoding Story</string>
+    <string name="login">Login</string>
+    <string name="login_sub_title">Login to continue using the app.</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="dont_have_account">Don\'t have an account?</string>
+    <string name="register">Register</string>
+    <string name="invalid_email">Invalid Email</string>
+    <string name="message_welcome">Welcome to Dicoding Story</string>
+    <string name="name">Name</string>
+    <string name="already_have_an_account">Already have an Account?</string>
+    <string name="register_sub_title">Create an Account to Enjoy the App!</string>
+    <string name="cannot_empty">Please fill in first.</string>
+    <string name="add_story">Add Story</string>
+    <string name="logout">Logout</string>
+    <string name="photo">Photo of Detail Story</string>
+    <string name="dummy_name">Fadhlan Sulistiyo</string>
+    <string name="dummy_description">This is Description</string>
 </resources>

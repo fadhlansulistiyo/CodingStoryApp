@@ -14,12 +14,17 @@ class UserRepository private constructor(
     private val userPreference: UserPreference,
     private val apiService: ApiService
 ) {
+    /*Session*/
     private suspend fun saveSession(user: UserModel) {
         userPreference.saveSession(user)
     }
 
     fun getSession(): Flow<UserModel> {
         return userPreference.getSession()
+    }
+
+    suspend fun logout() {
+        userPreference.logout()
     }
 
     fun register(name: String, email: String, password: String) = liveData {
