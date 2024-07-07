@@ -17,14 +17,15 @@ class ListStoryAdapter : ListAdapter<ListStoryItem, ListStoryAdapter.MyViewHolde
     class MyViewHolder(val binding: ItemStoryBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ListStoryItem) {
             binding.tvItemName.text = item.name
-            binding.tvItemDesc.text = item.description
+            binding.tvItemDescription.text = item.description
             Glide.with(itemView.context)
                 .load(item.photoUrl)
-                .into(binding.imgItemPhoto)
+                .into(binding.ivItemPhoto)
 
             itemView.setOnClickListener {
                 Intent(itemView.context, DetailStoriesActivity::class.java).apply {
                     putExtra(DetailStoriesActivity.EXTRA_ID, item.id)
+                    putExtra(DetailStoriesActivity.EXTRA_NAME, item.name)
                 }.run {
                     itemView.context.startActivity(this)
                 }

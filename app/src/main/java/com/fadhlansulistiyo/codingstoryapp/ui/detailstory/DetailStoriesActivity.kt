@@ -29,6 +29,7 @@ class DetailStoriesActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_ID = "extra_id"
+        const val EXTRA_NAME = "extra_name"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +44,16 @@ class DetailStoriesActivity : AppCompatActivity() {
         }
 
         val id = intent.getStringExtra(EXTRA_ID)
+        val name = intent.getStringExtra(EXTRA_NAME)
+
+        // SetUp Toolbar
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
+            title = name
+        }
+
         observeDetailStories(id.toString())
     }
 
@@ -78,7 +89,7 @@ class DetailStoriesActivity : AppCompatActivity() {
 
             Glide.with(this@DetailStoriesActivity)
                 .load(story.photoUrl)
-                .into(ivDetailPhotoUrl)
+                .into(ivDetailPhoto)
         }
     }
 

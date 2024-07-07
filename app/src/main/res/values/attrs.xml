@@ -1,4 +1,5 @@
 <resources>
+    <attr name="colorSurface" format="color" />
     <attr name="colorCustomColor" format="color" />
     <attr name="colorOnCustomColor" format="color" />
     <attr name="colorCustomColorContainer" format="color" />

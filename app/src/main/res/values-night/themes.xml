@@ -57,4 +57,77 @@
         <item name="colorCustomColorContainer">@color/colorCustomColorContainer</item>
         <item name="colorOnCustomColorContainer">@color/colorOnCustomColorContainer</item>
     </style>
+
+    <style name="TextContent">
+        <item name="fontFamily">@font/roboto</item>
+    </style>
+
+    <!-- Title Large -->
+    <style name="TextContent.TitleLarge">
+        <item name="android:textSize">34sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/colorOnBackground</item>
+    </style>
+
+    <!-- Title Medium -->
+    <style name="TextContent.TitleMedium">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/colorOnBackground</item>
+    </style>
+
+    <!-- Title Small -->
+    <style name="TextContent.TitleSmall">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/colorOnBackground</item>
+    </style>
+
+    <!-- Title Small.Color -->
+    <style name="TextContent.TitleSmall.Color">
+        <item name="android:textColor">@color/md_theme_primary</item>
+    </style>
+
+    <!-- Body Large -->
+    <style name="TextContent.BodyLarge">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">?attr/colorOnBackground</item>
+    </style>
+
+    <!-- Body Large.Bold -->
+    <style name="TextContent.BodyLarge.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Body Medium -->
+    <style name="TextContent.BodyMedium">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">?attr/colorOnBackground</item>
+    </style>
+
+    <!-- Body Medium.Bold -->
+    <style name="TextContent.BodyMedium.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Body Small -->
+    <style name="TextContent.BodySmall">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">?attr/colorOnBackground</item>
+    </style>
+
+    <!-- Body Small.Bold -->
+    <style name="TextContent.BodySmall.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Caption -->
+    <style name="TextContent.Caption">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">?attr/colorOnBackground</item>
+    </style>
 </resources>

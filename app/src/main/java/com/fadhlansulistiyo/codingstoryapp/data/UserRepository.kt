@@ -2,6 +2,7 @@ package com.fadhlansulistiyo.codingstoryapp.data
 
 import com.fadhlansulistiyo.codingstoryapp.data.model.UserModel
 import com.fadhlansulistiyo.codingstoryapp.data.pref.UserPreference
+import com.fadhlansulistiyo.codingstoryapp.data.response.AddStoryResponse
 import com.fadhlansulistiyo.codingstoryapp.data.response.DetailStoriesResponse
 import com.fadhlansulistiyo.codingstoryapp.data.response.ErrorResponse
 import com.fadhlansulistiyo.codingstoryapp.data.response.LoginResponse
@@ -10,7 +11,10 @@ import com.fadhlansulistiyo.codingstoryapp.data.response.StoryResponse
 import com.fadhlansulistiyo.codingstoryapp.data.retrofit.ApiService
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.HttpException
+import java.io.File
 
 class UserRepository private constructor(
     private val userPreference: UserPreference,
@@ -46,6 +50,17 @@ class UserRepository private constructor(
     suspend fun getDetailStories(id: String): DetailStoriesResponse {
         return try {
             apiService.getDetailStories(id)
+        } catch (e: HttpException) {
+            throw handleHttpException(e)
+        }
+    }
+
+    suspend fun uploadStory(
+        multipartFile: MultipartBody.Part,
+        description: RequestBody
+    ): AddStoryResponse {
+        return try {
+            apiService.uploadStory(multipartFile, description)
         } catch (e: HttpException) {
             throw handleHttpException(e)
         }

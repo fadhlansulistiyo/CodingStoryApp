@@ -3,13 +3,13 @@ package com.fadhlansulistiyo.codingstoryapp.ui.home
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fadhlansulistiyo.codingstoryapp.R
 import com.fadhlansulistiyo.codingstoryapp.data.ResultState
@@ -17,6 +17,7 @@ import com.fadhlansulistiyo.codingstoryapp.databinding.ActivityHomeBinding
 import com.fadhlansulistiyo.codingstoryapp.ui.ViewModelFactory
 import com.fadhlansulistiyo.codingstoryapp.ui.addstory.AddStoryActivity
 import com.fadhlansulistiyo.codingstoryapp.ui.main.MainActivity
+import com.google.android.material.color.MaterialColors
 
 class HomeActivity : AppCompatActivity() {
 
@@ -32,14 +33,15 @@ class HomeActivity : AppCompatActivity() {
         enableEdgeToEdge()
         _binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+
+        val appBarLayout = binding.appBarLayout
+        setSupportActionBar(binding.toolbar)
+        binding.appBarLayout.setStatusBarForegroundColor(
+            MaterialColors.getColor(appBarLayout, R.attr.colorSurface)
+        )
 
         observeStories()
-        setupAction()
+        addStory()
     }
 
     private fun observeStories() {
@@ -52,11 +54,13 @@ class HomeActivity : AppCompatActivity() {
                 when (result) {
                     is ResultState.Loading -> {
                         showLoading(true)
+                        showFab(false)
                     }
 
                     is ResultState.Success -> {
                         showLoading(false)
                         Log.d(this@HomeActivity.toString(), "${result.data}")
+                        showFab(true)
 
                         val storyData = result.data.listStory
                         storyAdapter.submitList(storyData)
@@ -72,21 +76,23 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    private fun showFab(isVisible: Boolean) {
+        binding.fabAddStory.visibility = if (isVisible) View.VISIBLE else View.GONE
+    }
 
-    private fun setupAction() {
-        binding.apply {
-            btnLogout.setOnClickListener {
-                viewModel.logout()
-                val intent = Intent(this@HomeActivity, MainActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
-        }
+    private fun addStory() {
         binding.fabAddStory.setOnClickListener {
             val intent = Intent(this, AddStoryActivity::class.java)
             startActivity(intent)
             Log.d("HomeActivity", "Add Story")
         }
+    }
+
+    private fun logout() {
+        viewModel.logout()
+        val intent = Intent(this@HomeActivity, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     private fun showLoading(isLoading: Boolean) {
@@ -95,6 +101,26 @@ class HomeActivity : AppCompatActivity() {
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        observeStories()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.option_home, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_logout -> {
+                logout()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onDestroy() {
