@@ -35,4 +35,9 @@
     <string name="dicoding_logo">Dicoding Logo</string>
     <string name="example_email_com">example@email.com</string>
     <string name="splash_screen">Splash Screen</string>
+    <string name="add_widget">Add widget</string>
+    <string name="app_widget_description">This is an app widget description</string>
+
+    <string name="appwidget_text">No data available</string>
+    <string name="appwidget_image">Image</string>
 </resources>
