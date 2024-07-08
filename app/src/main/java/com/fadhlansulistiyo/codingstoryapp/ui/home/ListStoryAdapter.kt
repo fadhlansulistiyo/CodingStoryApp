@@ -11,6 +11,8 @@ import com.bumptech.glide.Glide
 import com.fadhlansulistiyo.codingstoryapp.data.response.ListStoryItem
 import com.fadhlansulistiyo.codingstoryapp.databinding.ItemStoryBinding
 import com.fadhlansulistiyo.codingstoryapp.ui.detailstory.DetailStoriesActivity
+import com.fadhlansulistiyo.codingstoryapp.ui.util.DateFormatter
+import java.util.TimeZone
 
 class ListStoryAdapter : ListAdapter<ListStoryItem, ListStoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
@@ -18,6 +20,8 @@ class ListStoryAdapter : ListAdapter<ListStoryItem, ListStoryAdapter.MyViewHolde
         fun bind(item: ListStoryItem) {
             binding.tvItemName.text = item.name
             binding.tvItemDescription.text = item.description
+            binding.tvItemDate.text = DateFormatter.formatDate(item.createdAt.toString(), TimeZone.getDefault().id)
+
             Glide.with(itemView.context)
                 .load(item.photoUrl)
                 .into(binding.ivItemPhoto)
