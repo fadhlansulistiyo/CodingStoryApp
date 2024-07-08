@@ -1,6 +1,5 @@
 package com.fadhlansulistiyo.codingstoryapp.ui.detailstory
 
-import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -15,7 +14,6 @@ import com.fadhlansulistiyo.codingstoryapp.data.ResultState
 import com.fadhlansulistiyo.codingstoryapp.data.response.Story
 import com.fadhlansulistiyo.codingstoryapp.databinding.ActivityDetailStoriesBinding
 import com.fadhlansulistiyo.codingstoryapp.ui.ViewModelFactory
-import com.google.android.material.snackbar.Snackbar
 import com.fadhlansulistiyo.codingstoryapp.ui.util.DateFormatter
 import java.util.TimeZone
 
@@ -47,7 +45,7 @@ class DetailStoriesActivity : AppCompatActivity() {
         val id = intent.getStringExtra(EXTRA_ID)
         val name = intent.getStringExtra(EXTRA_NAME)
 
-        // SetUp Toolbar
+        // Set Up Toolbar
         setSupportActionBar(binding.toolbar)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
@@ -76,7 +74,6 @@ class DetailStoriesActivity : AppCompatActivity() {
                 }
             }
         }
-
     }
 
     private fun setDetailStory(story: Story) {
@@ -93,14 +90,6 @@ class DetailStoriesActivity : AppCompatActivity() {
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-    }
-
-    private fun showSnackbar(activity: Activity, message: String) {
-        Snackbar.make(
-            activity.findViewById(android.R.id.content),
-            message,
-            Snackbar.LENGTH_SHORT
-        ).show()
     }
 
     private fun showToast(message: String) {

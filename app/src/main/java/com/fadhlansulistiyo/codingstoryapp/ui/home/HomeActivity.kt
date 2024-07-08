@@ -2,7 +2,6 @@ package com.fadhlansulistiyo.codingstoryapp.ui.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -34,6 +33,7 @@ class HomeActivity : AppCompatActivity() {
         _binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Set Up Toolbar
         val appBarLayout = binding.appBarLayout
         setSupportActionBar(binding.toolbar)
         binding.appBarLayout.setStatusBarForegroundColor(
@@ -75,6 +75,13 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    private fun logout() {
+        viewModel.logout()
+        val intent = Intent(this@HomeActivity, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
     private fun showFab(isVisible: Boolean) {
         binding.fabAddStory.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
@@ -84,13 +91,6 @@ class HomeActivity : AppCompatActivity() {
             val intent = Intent(this, AddStoryActivity::class.java)
             startActivity(intent)
         }
-    }
-
-    private fun logout() {
-        viewModel.logout()
-        val intent = Intent(this@HomeActivity, MainActivity::class.java)
-        startActivity(intent)
-        finish()
     }
 
     private fun showLoading(isLoading: Boolean) {

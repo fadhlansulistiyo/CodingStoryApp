@@ -14,19 +14,11 @@ import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.HttpException
-import java.io.File
 
 class UserRepository private constructor(
     private val userPreference: UserPreference,
     private val apiService: ApiService
 ) {
-    suspend fun register(name: String, email: String, password: String): RegisterResponse {
-        return try {
-            apiService.register(name, email, password)
-        } catch (e: HttpException) {
-            throw handleHttpException(e)
-        }
-    }
 
     suspend fun login(email: String, password: String): LoginResponse {
         return try {
@@ -34,6 +26,14 @@ class UserRepository private constructor(
             val token = response.loginResult?.token.toString()
             saveSession(UserModel(email, token))
             response
+        } catch (e: HttpException) {
+            throw handleHttpException(e)
+        }
+    }
+
+    suspend fun register(name: String, email: String, password: String): RegisterResponse {
+        return try {
+            apiService.register(name, email, password)
         } catch (e: HttpException) {
             throw handleHttpException(e)
         }

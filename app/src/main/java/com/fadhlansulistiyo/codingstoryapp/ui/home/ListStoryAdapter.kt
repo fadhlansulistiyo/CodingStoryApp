@@ -20,7 +20,8 @@ class ListStoryAdapter : ListAdapter<ListStoryItem, ListStoryAdapter.MyViewHolde
         fun bind(item: ListStoryItem) {
             binding.tvItemName.text = item.name
             binding.tvItemDescription.text = item.description
-            binding.tvItemDate.text = DateFormatter.formatDate(item.createdAt.toString(), TimeZone.getDefault().id)
+            binding.tvItemDate.text =
+                DateFormatter.formatDate(item.createdAt.toString(), TimeZone.getDefault().id)
 
             Glide.with(itemView.context)
                 .load(item.photoUrl)

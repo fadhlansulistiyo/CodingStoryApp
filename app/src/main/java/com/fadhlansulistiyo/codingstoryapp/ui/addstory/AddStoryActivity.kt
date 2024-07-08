@@ -2,7 +2,6 @@ package com.fadhlansulistiyo.codingstoryapp.ui.addstory
 
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -12,14 +11,10 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.fadhlansulistiyo.codingstoryapp.R
 import com.fadhlansulistiyo.codingstoryapp.data.ResultState
 import com.fadhlansulistiyo.codingstoryapp.databinding.ActivityAddStoryBinding
-import com.fadhlansulistiyo.codingstoryapp.databinding.ActivityHomeBinding
 import com.fadhlansulistiyo.codingstoryapp.ui.ViewModelFactory
-import com.fadhlansulistiyo.codingstoryapp.ui.home.HomeViewModel
 import com.fadhlansulistiyo.codingstoryapp.ui.util.getImageUri
 import com.fadhlansulistiyo.codingstoryapp.ui.util.reduceFileImage
 import com.fadhlansulistiyo.codingstoryapp.ui.util.uriToFile
@@ -41,13 +36,14 @@ class AddStoryActivity : AppCompatActivity() {
         _binding = ActivityAddStoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // SetUp Toolbar
+        // Set Up Toolbar
         setSupportActionBar(binding.toolbar)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
         }
 
+        // Set Up Action
         binding.addStoryComponent.apply {
             buttonGallery.setOnClickListener { startGallery() }
             buttonCamera.setOnClickListener { startCamera() }
@@ -109,6 +105,12 @@ class AddStoryActivity : AppCompatActivity() {
         } ?: showSnackbar(getString(R.string.empty_image_warning))
     }
 
+    private fun showImage() {
+        currentImageUri?.let {
+            binding.addStoryComponent.addStoryImageView.setImageURI(it)
+        }
+    }
+
     private fun showToast(message: String?) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
@@ -116,12 +118,6 @@ class AddStoryActivity : AppCompatActivity() {
     private fun showLoading(isLoading: Boolean) {
         binding.addStoryComponent.linearProgress.visibility =
             if (isLoading) View.VISIBLE else View.GONE
-    }
-
-    private fun showImage() {
-        currentImageUri?.let {
-            binding.addStoryComponent.addStoryImageView.setImageURI(it)
-        }
     }
 
     private fun showSnackbar(message: String) {
