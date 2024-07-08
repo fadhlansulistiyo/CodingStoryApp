@@ -1,5 +1,7 @@
 package com.fadhlansulistiyo.codingstoryapp.ui.register
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -40,6 +42,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         setupAction()
+        playAnimation()
     }
 
     private fun setupAction() {
@@ -104,6 +107,41 @@ class RegisterActivity : AppCompatActivity() {
             message,
             Snackbar.LENGTH_SHORT
         ).show()
+    }
+
+    private fun playAnimation() {
+        ObjectAnimator.ofFloat(binding.ivLogo, View.TRANSLATION_X, -30f, 30f).apply {
+            duration = 6000
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.REVERSE
+        }.start()
+
+        val title = ObjectAnimator.ofFloat(binding.tvTitle, View.ALPHA, 1f).setDuration(100)
+        val subtitle =
+            ObjectAnimator.ofFloat(binding.tvSubtitle, View.ALPHA, 1f).setDuration(100)
+        val layoutRegisterName =
+            ObjectAnimator.ofFloat(binding.layoutRegisterName, View.ALPHA, 1f).setDuration(100)
+        val layoutRegisterEmail =
+            ObjectAnimator.ofFloat(binding.layoutRegisterEmail, View.ALPHA, 1f).setDuration(100)
+        val layoutRegisterPassword =
+            ObjectAnimator.ofFloat(binding.layoutRegisterPassword, View.ALPHA, 1f).setDuration(100)
+        val btnRegister =
+            ObjectAnimator.ofFloat(binding.btnRegister, View.ALPHA, 1f).setDuration(100)
+        val toLogin =
+            ObjectAnimator.ofFloat(binding.toLogin, View.ALPHA, 1f).setDuration(100)
+
+        AnimatorSet().apply {
+            playSequentially(
+                title,
+                subtitle,
+                layoutRegisterName,
+                layoutRegisterEmail,
+                layoutRegisterPassword,
+                btnRegister,
+                toLogin
+            )
+            startDelay = 100
+        }.start()
     }
 
     private fun showLoading(isLoading: Boolean) {

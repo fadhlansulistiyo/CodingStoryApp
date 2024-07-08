@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="64dp"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.1" />
+        app:layout_constraintGuide_begin="74dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/register_guideline2"
@@ -20,11 +20,11 @@
         android:layout_height="64dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_percent="0.30191082"
+        app:layout_constraintGuide_end="495dp"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/tv_headline"
+        android:id="@+id/iv_logo"
         android:layout_width="match_parent"
         android:layout_height="130dp"
         android:contentDescription="@string/dicoding_logo"
@@ -43,7 +43,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
-        android:alpha="1"
+        android:alpha="0"
         android:text="@string/register"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -59,7 +59,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
-        android:alpha="1"
+        android:alpha="0"
         android:text="@string/register_sub_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -75,7 +75,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        android:alpha="1"
+        android:alpha="0"
         android:hint="@string/name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -99,7 +99,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
-        android:alpha="1"
+        android:alpha="0"
         android:hint="@string/email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -124,7 +124,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
-        android:alpha="1"
+        android:alpha="0"
         android:hint="@string/password"
         app:endIconMode="password_toggle"
         app:errorEnabled="true"
@@ -149,7 +149,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
-        android:alpha="1"
+        android:alpha="0"
         android:text="@string/register"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -160,10 +160,12 @@
         android:id="@+id/to_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:alpha="0"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="@id/btn_register"
         app:layout_constraintStart_toStartOf="@id/btn_register"
-        app:layout_constraintTop_toBottomOf="@id/btn_register">
+        app:layout_constraintTop_toBottomOf="@id/btn_register"
+        tools:alpha="100">
 
         <TextView
             android:id="@+id/tv_create_account"
@@ -198,5 +200,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,8 +1,9 @@
 package com.fadhlansulistiyo.codingstoryapp.ui.login
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -39,6 +40,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         setupAction()
+        playAnimation()
     }
 
     private fun setupAction() {
@@ -87,6 +89,39 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
+    private fun playAnimation() {
+        ObjectAnimator.ofFloat(binding.ivLogo, View.TRANSLATION_X, -30f, 30f).apply {
+            duration = 6000
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.REVERSE
+        }.start()
+
+        val title = ObjectAnimator.ofFloat(binding.tvTitle, View.ALPHA, 1f).setDuration(100)
+        val subtitle =
+            ObjectAnimator.ofFloat(binding.tvSubtitle, View.ALPHA, 1f).setDuration(100)
+        val layoutLoginEmail =
+            ObjectAnimator.ofFloat(binding.layoutLoginEmail, View.ALPHA, 1f).setDuration(100)
+        val layoutLoginPassword =
+            ObjectAnimator.ofFloat(binding.layoutLoginPassword, View.ALPHA, 1f).setDuration(100)
+        val btnLogin =
+            ObjectAnimator.ofFloat(binding.btnLogin, View.ALPHA, 1f).setDuration(100)
+        val toRegister =
+            ObjectAnimator.ofFloat(binding.toRegister, View.ALPHA, 1f).setDuration(100)
+
+        AnimatorSet().apply {
+            playSequentially(
+                title,
+                subtitle,
+                layoutLoginEmail,
+                layoutLoginPassword,
+                btnLogin,
+                toRegister
+            )
+            startDelay = 100
+        }.start()
+    }
+
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
