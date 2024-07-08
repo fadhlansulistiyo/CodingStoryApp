@@ -17,6 +17,8 @@ import com.fadhlansulistiyo.codingstoryapp.databinding.ActivityLoginBinding
 import com.fadhlansulistiyo.codingstoryapp.ui.ViewModelFactory
 import com.fadhlansulistiyo.codingstoryapp.ui.home.HomeActivity
 import com.fadhlansulistiyo.codingstoryapp.ui.register.RegisterActivity
+import com.fadhlansulistiyo.codingstoryapp.ui.util.EmailValidator
+import com.fadhlansulistiyo.codingstoryapp.ui.util.PasswordValidator
 import com.fadhlansulistiyo.codingstoryapp.ui.util.isValidEmail
 
 class LoginActivity : AppCompatActivity() {
@@ -41,6 +43,7 @@ class LoginActivity : AppCompatActivity() {
 
         setupAction()
         playAnimation()
+        setupValidators()
     }
 
     private fun setupAction() {
@@ -88,6 +91,11 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    private fun setupValidators() {
+        binding.edLoginEmail.setValidator(EmailValidator())
+        binding.edLoginPassword.setValidator(PasswordValidator())
     }
 
     private fun playAnimation() {

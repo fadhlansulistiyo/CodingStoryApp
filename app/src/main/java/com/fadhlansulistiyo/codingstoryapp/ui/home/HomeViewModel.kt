@@ -17,7 +17,7 @@ class HomeViewModel(private val repository: UserRepository) : ViewModel() {
         }
     }
 
-    fun getStories(): LiveData<ResultState<StoryResponse>> = liveData{
+    fun getStories(): LiveData<ResultState<StoryResponse>> = liveData {
         emit(ResultState.Loading)
         try {
             val response = repository.getStories()

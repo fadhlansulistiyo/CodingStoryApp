@@ -17,6 +17,8 @@ import com.fadhlansulistiyo.codingstoryapp.data.ResultState
 import com.fadhlansulistiyo.codingstoryapp.databinding.ActivityRegisterBinding
 import com.fadhlansulistiyo.codingstoryapp.ui.ViewModelFactory
 import com.fadhlansulistiyo.codingstoryapp.ui.login.LoginActivity
+import com.fadhlansulistiyo.codingstoryapp.ui.util.EmailValidator
+import com.fadhlansulistiyo.codingstoryapp.ui.util.PasswordValidator
 import com.fadhlansulistiyo.codingstoryapp.ui.util.isValidEmail
 import com.google.android.material.snackbar.Snackbar
 
@@ -42,6 +44,7 @@ class RegisterActivity : AppCompatActivity() {
 
         setupAction()
         playAnimation()
+        setupValidators()
     }
 
     private fun setupAction() {
@@ -98,6 +101,11 @@ class RegisterActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+    }
+
+    private fun setupValidators() {
+        binding.edRegisterEmail.setValidator(EmailValidator())
+        binding.edRegisterPassword.setValidator(PasswordValidator())
     }
 
     private fun showSnackbar(activity: Activity, message: String) {

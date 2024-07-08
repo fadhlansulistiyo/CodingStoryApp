@@ -88,11 +88,13 @@ class AddStoryActivity : AppCompatActivity() {
                         is ResultState.Loading -> {
                             showLoading(true)
                         }
+
                         is ResultState.Success -> {
                             showLoading(false)
                             showToast(result.data.message)
                             finish()
                         }
+
                         is ResultState.Error -> {
                             showLoading(false)
                             showSnackbar(result.error)

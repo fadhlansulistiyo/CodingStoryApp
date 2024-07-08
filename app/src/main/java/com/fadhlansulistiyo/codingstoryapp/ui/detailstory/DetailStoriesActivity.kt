@@ -56,10 +56,12 @@ class DetailStoriesActivity : AppCompatActivity() {
                     is ResultState.Loading -> {
                         showLoading(true)
                     }
+
                     is ResultState.Success -> {
                         showLoading(false)
                         result.data.story?.let { setDetailStory(it) }
                     }
+
                     is ResultState.Error -> {
                         showLoading(false)
                         showToast(result.error)
@@ -73,7 +75,8 @@ class DetailStoriesActivity : AppCompatActivity() {
         binding.apply {
             tvDetailName.text = story.name
             tvDetailDescription.text = story.description
-            tvDetailDate.text = DateFormatter.formatDate(story.createdAt.toString(), TimeZone.getDefault().id)
+            tvDetailDate.text =
+                DateFormatter.formatDate(story.createdAt.toString(), TimeZone.getDefault().id)
 
             Glide.with(this@DetailStoriesActivity)
                 .load(story.photoUrl)
@@ -95,6 +98,7 @@ class DetailStoriesActivity : AppCompatActivity() {
                 onBackPressed()
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
