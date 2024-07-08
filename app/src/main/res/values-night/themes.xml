@@ -58,6 +58,16 @@
         <item name="colorOnCustomColorContainer">@color/colorOnCustomColorContainer</item>
     </style>
 
+    <style name="RoundedCornerImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
+    <style name="CircularImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
     <style name="TextContent">
         <item name="fontFamily">@font/roboto</item>
     </style>
