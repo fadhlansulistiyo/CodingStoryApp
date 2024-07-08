@@ -1,6 +1,7 @@
 package com.fadhlansulistiyo.codingstoryapp.ui.detailstory
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -36,11 +37,6 @@ class DetailStoriesActivity : AppCompatActivity() {
         enableEdgeToEdge()
         _binding = ActivityDetailStoriesBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
         val id = intent.getStringExtra(EXTRA_ID)
         val name = intent.getStringExtra(EXTRA_NAME)
@@ -94,6 +90,16 @@ class DetailStoriesActivity : AppCompatActivity() {
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onDestroy() {
