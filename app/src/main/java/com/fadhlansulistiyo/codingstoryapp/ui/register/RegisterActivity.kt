@@ -72,7 +72,6 @@ class RegisterActivity : AppCompatActivity() {
                         is ResultState.Success -> {
                             showLoading(false)
                             showSnackbar(this, result.data.message)
-                            Log.d("RegisterActivity", result.data.message)
 
                             // if success
                             val intent = Intent(this, LoginActivity::class.java)

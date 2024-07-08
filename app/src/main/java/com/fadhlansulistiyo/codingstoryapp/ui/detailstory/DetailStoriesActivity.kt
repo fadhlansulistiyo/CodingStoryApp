@@ -2,7 +2,6 @@ package com.fadhlansulistiyo.codingstoryapp.ui.detailstory
 
 import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -17,6 +16,8 @@ import com.fadhlansulistiyo.codingstoryapp.data.response.Story
 import com.fadhlansulistiyo.codingstoryapp.databinding.ActivityDetailStoriesBinding
 import com.fadhlansulistiyo.codingstoryapp.ui.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
+import com.fadhlansulistiyo.codingstoryapp.ui.util.DateFormatter
+import java.util.TimeZone
 
 class DetailStoriesActivity : AppCompatActivity() {
 
@@ -66,9 +67,6 @@ class DetailStoriesActivity : AppCompatActivity() {
                     }
                     is ResultState.Success -> {
                         showLoading(false)
-                        showSnackbar(this, result.data.message.toString())
-                        Log.d(this@DetailStoriesActivity.toString(), result.data.message.toString())
-
                         result.data.story?.let { setDetailStory(it) }
                     }
                     is ResultState.Error -> {
@@ -85,7 +83,7 @@ class DetailStoriesActivity : AppCompatActivity() {
         binding.apply {
             tvDetailName.text = story.name
             tvDetailDescription.text = story.description
-            tvDetailDate.text = story.createdAt
+            tvDetailDate.text = DateFormatter.formatDate(story.createdAt.toString(), TimeZone.getDefault().id)
 
             Glide.with(this@DetailStoriesActivity)
                 .load(story.photoUrl)

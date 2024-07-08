@@ -59,7 +59,6 @@ class HomeActivity : AppCompatActivity() {
 
                     is ResultState.Success -> {
                         showLoading(false)
-                        Log.d(this@HomeActivity.toString(), "${result.data}")
                         showFab(true)
 
                         val storyData = result.data.listStory
@@ -84,7 +83,6 @@ class HomeActivity : AppCompatActivity() {
         binding.fabAddStory.setOnClickListener {
             val intent = Intent(this, AddStoryActivity::class.java)
             startActivity(intent)
-            Log.d("HomeActivity", "Add Story")
         }
     }
 

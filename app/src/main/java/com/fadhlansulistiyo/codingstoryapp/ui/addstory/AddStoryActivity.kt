@@ -96,7 +96,6 @@ class AddStoryActivity : AppCompatActivity() {
                         }
                         is ResultState.Success -> {
                             showLoading(false)
-                            Log.d(this@AddStoryActivity.toString(), "${result.data}")
                             showToast(result.data.message)
                             finish()
                         }

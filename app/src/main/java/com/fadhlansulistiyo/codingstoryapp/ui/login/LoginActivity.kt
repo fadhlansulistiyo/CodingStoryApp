@@ -65,7 +65,6 @@ class LoginActivity : AppCompatActivity() {
 
                         is ResultState.Success -> {
                             showLoading(false)
-                            Log.d(this@LoginActivity.toString(), "${result.data}")
 
                             val intent = Intent(this, HomeActivity::class.java)
                             intent.flags =
