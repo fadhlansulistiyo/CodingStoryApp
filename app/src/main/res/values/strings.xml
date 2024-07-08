@@ -32,4 +32,7 @@
     <string name="empty_image_warning">Please insert the image file first..</string>
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
     <string name="detail_story">Detail Story</string>
+    <string name="dicoding_logo">Dicoding Logo</string>
+    <string name="example_email_com">example@email.com</string>
+    <string name="splash_screen">Splash Screen</string>
 </resources>
