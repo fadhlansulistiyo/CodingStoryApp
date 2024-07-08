@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/addStoryComponent"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -29,61 +30,56 @@
         app:layout_constraintTop_toBottomOf="@id/linear_progress"
         app:srcCompat="@drawable/ic_place_holder" />
 
-    <LinearLayout
-        android:id="@+id/button1"
-        android:layout_width="match_parent"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_camera"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/addStory_imageView">
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@string/camera"
+        android:text="@string/camera"
+        app:layout_constraintEnd_toStartOf="@id/button_gallery"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/addStory_imageView" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_camera"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_weight="1"
-            android:contentDescription="@string/camera"
-            android:text="@string/camera" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_gallery"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_weight="1"
-            android:contentDescription="@string/gallery"
-            android:text="@string/gallery" />
-    </LinearLayout>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_gallery"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="@string/gallery"
+        android:text="@string/gallery"
+        app:layout_constraintBottom_toBottomOf="@id/button_camera"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/button_camera"
+        app:layout_constraintTop_toTopOf="@id/button_camera" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/addStory_edt_layout"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        app:boxBackgroundMode="outline"
+        android:hint="@string/description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button1">
+        app:layout_constraintTop_toBottomOf="@+id/button_camera">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ed_add_description"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:ems="10"
             android:gravity="top|start"
             android:hint="@string/description"
             android:inputType="textMultiLine"
             android:maxLines="6"
-            android:overScrollMode="always"
-            android:scrollbars="vertical" />
-
+            android:overScrollMode="always" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
@@ -102,12 +98,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/addStory_edt_layout" />
-
-    <View
-        android:id="@+id/view_helper"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_add" />
 </androidx.constraintlayout.widget.ConstraintLayout>

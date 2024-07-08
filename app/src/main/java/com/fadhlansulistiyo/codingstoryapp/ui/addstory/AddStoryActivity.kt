@@ -128,30 +128,9 @@ class AddStoryActivity : AppCompatActivity() {
         ).show()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.option_add_story, menu)
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
         return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                onBackPressed()
-                true
-            }
-
-            R.id.action_setting -> {
-                // Handle setting menu item
-                true
-            }
-
-            R.id.action_coming_soon -> {
-                // Handle coming soon menu item
-                true
-            }
-
-            else -> super.onOptionsItemSelected(item)
-        }
     }
 
     override fun onDestroy() {

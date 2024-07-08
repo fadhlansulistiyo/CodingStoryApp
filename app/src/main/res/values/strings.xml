@@ -20,7 +20,7 @@
     <string name="dummy_description">This is Description</string>
     <string name="share">Share</string>
     <string name="detail_user_avatar">Detail User Photo</string>
-    <string name="dummy_date">01-01-2024</string>
+    <string name="dummy_date">01–01–2024</string>
     <string name="loading">Loading</string>
     <string name="description">Description</string>
     <string name="addStory_contentDesc">Show Image file from Camera</string>
