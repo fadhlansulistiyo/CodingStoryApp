@@ -143,10 +143,10 @@ class MapsStoryActivity : AppCompatActivity(), OnMapReadyCallback {
             val success =
                 mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style))
             if (!success) {
-                Log.e("MapsStoriesActivity", "Style parsing failed.")
+                showToast("Style parsing failed.")
             }
         } catch (exception: Resources.NotFoundException) {
-            Log.e("MapsStoriesActivity", "Can't find style. Error: ", exception)
+            showToast("Can't find style. Error: $exception")
         }
     }
 
