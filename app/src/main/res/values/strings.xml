@@ -35,4 +35,6 @@
     <string name="dicoding_logo">Dicoding Logo</string>
     <string name="example_email_com">example@email.com</string>
     <string name="splash_screen">Splash Screen</string>
+    <string name="title_activity_maps_story">MapsStoryActivity</string>
+    <string name="maps">Maps</string>
 </resources>

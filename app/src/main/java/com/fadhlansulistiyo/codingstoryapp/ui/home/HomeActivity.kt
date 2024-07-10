@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.fadhlansulistiyo.codingstoryapp.R
 import com.fadhlansulistiyo.codingstoryapp.data.ResultState
 import com.fadhlansulistiyo.codingstoryapp.databinding.ActivityHomeBinding
+import com.fadhlansulistiyo.codingstoryapp.maps.MapsStoryActivity
 import com.fadhlansulistiyo.codingstoryapp.ui.ViewModelFactory
 import com.fadhlansulistiyo.codingstoryapp.ui.addstory.AddStoryActivity
 import com.fadhlansulistiyo.codingstoryapp.ui.main.MainActivity
@@ -117,7 +118,11 @@ class HomeActivity : AppCompatActivity() {
                 logout()
                 true
             }
-
+            R.id.action_maps -> {
+                val intent = Intent(this, MapsStoryActivity::class.java)
+                startActivity(intent)
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

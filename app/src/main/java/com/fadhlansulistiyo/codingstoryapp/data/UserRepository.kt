@@ -66,6 +66,14 @@ class UserRepository private constructor(
         }
     }
 
+    suspend fun getStoriesWithLocation(): StoryResponse {
+        return try {
+            apiService.getStoriesWithLocation()
+        } catch (e: HttpException) {
+            throw handleHttpException(e)
+        }
+    }
+
     private suspend fun saveSession(user: UserModel) {
         userPreference.saveSession(user)
     }

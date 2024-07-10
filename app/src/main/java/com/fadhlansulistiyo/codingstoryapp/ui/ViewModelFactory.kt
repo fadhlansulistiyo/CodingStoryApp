@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.fadhlansulistiyo.codingstoryapp.data.UserRepository
 import com.fadhlansulistiyo.codingstoryapp.di.Injection
+import com.fadhlansulistiyo.codingstoryapp.maps.MapsStoryViewModel
 import com.fadhlansulistiyo.codingstoryapp.ui.addstory.AddStoryViewModel
 import com.fadhlansulistiyo.codingstoryapp.ui.detailstory.DetailStoriesViewModel
 import com.fadhlansulistiyo.codingstoryapp.ui.home.HomeViewModel
@@ -24,6 +25,7 @@ class ViewModelFactory(private val repository: UserRepository) :
             modelClass.isAssignableFrom(DetailStoriesViewModel::class.java) -> DetailStoriesViewModel(repository) as T
             modelClass.isAssignableFrom(AddStoryViewModel::class.java) -> AddStoryViewModel(repository) as T
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> HomeViewModel(repository) as T
+            modelClass.isAssignableFrom(MapsStoryViewModel::class.java) -> MapsStoryViewModel(repository) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }
