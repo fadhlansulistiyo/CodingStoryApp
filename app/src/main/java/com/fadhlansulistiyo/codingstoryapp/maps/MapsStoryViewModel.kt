@@ -24,7 +24,7 @@ class MapsStoryViewModel(private val userRepository: UserRepository) : ViewModel
             val response = userRepository.getStoriesWithLocation()
             _mapsStories.value = ResultState.Success(response.listStory)
         } catch (e: Exception) {
-            _mapsStories.value = ResultState.Error(e.message ?: "Unknown error")
+            _mapsStories.value = ResultState.Error(e.message.toString())
         }
     }
 }

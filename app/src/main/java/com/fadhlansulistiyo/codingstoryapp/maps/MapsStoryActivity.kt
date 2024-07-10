@@ -1,7 +1,9 @@
 package com.fadhlansulistiyo.codingstoryapp.maps
 
+import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -14,8 +16,10 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.fadhlansulistiyo.codingstoryapp.databinding.ActivityMapsStoryBinding
 import com.fadhlansulistiyo.codingstoryapp.ui.ViewModelFactory
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 
 class MapsStoryActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -65,6 +69,8 @@ class MapsStoryActivity : AppCompatActivity(), OnMapReadyCallback {
                 addMarkers(result.data)
             }
         }
+
+        setMapStyle()
     }
 
     private fun observeMapStories() {
@@ -101,6 +107,7 @@ class MapsStoryActivity : AppCompatActivity(), OnMapReadyCallback {
                     .position(LatLng(lat, lon))
                     .title(data.name)
                     .snippet(data.description)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET))
                 mMap.addMarker(markerOptions)
                 boundsBuilder.include(LatLng(lat, lon))
             }
@@ -117,7 +124,7 @@ class MapsStoryActivity : AppCompatActivity(), OnMapReadyCallback {
         )
 
         /**
-        * Use this code block to check story results on maps.
+        * This code block is used for testing the display of maps stories in camera view.
         * Because sometimes there are stories located in countries outside Indonesia,
         * so the camera view (newLatLngBounds) doesn't zoom the stories properly.
         */
@@ -129,6 +136,18 @@ class MapsStoryActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
             }
         }*/
+    }
+
+    private fun setMapStyle() {
+        try {
+            val success =
+                mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style))
+            if (!success) {
+                Log.e("MapsStoriesActivity", "Style parsing failed.")
+            }
+        } catch (exception: Resources.NotFoundException) {
+            Log.e("MapsStoriesActivity", "Can't find style. Error: ", exception)
+        }
     }
 
     private fun showToast(message: String) {
