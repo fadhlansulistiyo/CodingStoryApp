@@ -3,6 +3,7 @@ package com.fadhlansulistiyo.codingstoryapp.maps
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import com.fadhlansulistiyo.codingstoryapp.R
 import com.fadhlansulistiyo.codingstoryapp.data.ResultState
@@ -28,7 +29,6 @@ class MapsStoryActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private val boundsBuilder = LatLngBounds.Builder()
-    private var stories: List<ListStoryItem>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +60,36 @@ class MapsStoryActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.uiSettings.isCompassEnabled = true
         mMap.uiSettings.isMapToolbarEnabled = true
 
-        stories?.let { addMarkers(it) }
+        viewModel.mapsStories.value?.let { result ->
+            if (result is ResultState.Success) {
+                addMarkers(result.data)
+            }
+        }
+    }
+
+    private fun observeMapStories() {
+        viewModel.mapsStories.observe(this) { result ->
+            when (result) {
+                is ResultState.Loading -> {
+                    showLoading(true)
+                }
+
+                is ResultState.Success -> {
+                    showLoading(false)
+                    showToast(MAPS_LOADED_SUCCESSFULLY)
+                    result.data.let { storyList ->
+                        if (::mMap.isInitialized) {
+                            addMarkers(storyList)
+                        }
+                    }
+                }
+
+                is ResultState.Error -> {
+                    showLoading(false)
+                    showToast(result.error)
+                }
+            }
+        }
     }
 
     private fun addMarkers(mapStories: List<ListStoryItem>) {
@@ -86,28 +115,24 @@ class MapsStoryActivity : AppCompatActivity(), OnMapReadyCallback {
                 300
             )
         )
-    }
 
-    private fun observeMapStories() {
-        viewModel.getStoriesWithLocation().observe(this) { result ->
-            when (result) {
-                is ResultState.Loading -> {
-                    showLoading(true)
-                }
-
-                is ResultState.Success -> {
-                    showLoading(false)
-                    result.data.let { storyResponse ->
-                        stories = storyResponse.listStory
-                        addMarkers(stories!!)
-                    }
-                }
-
-                is ResultState.Error -> {
-                    showLoading(false)
+        /**
+        * Use this code block to check story results on maps.
+        * Because sometimes there are stories located in countries outside Indonesia,
+        * so the camera view (newLatLngBounds) doesn't zoom the stories properly.
+        */
+        /*mapStories.firstOrNull()?.let { firstStory ->
+            firstStory.lat?.let { lat ->
+                firstStory.lon?.let { lon ->
+                    val firstLocation = LatLng(lat, lon)
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(firstLocation, 5f))
                 }
             }
-        }
+        }*/
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     private fun showLoading(isLoading: Boolean) {
@@ -117,5 +142,9 @@ class MapsStoryActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    companion object {
+        private const val MAPS_LOADED_SUCCESSFULLY = "Maps Stories loaded successfully"
     }
 }
