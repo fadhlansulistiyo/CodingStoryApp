@@ -1,7 +1,13 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
 }
+
+val properties = Properties()
+project.rootProject.file("local.properties").inputStream().use { properties.load(it) }
+val baseUrl: String = properties.getProperty("BASE_URL")
 
 android {
     namespace = "com.fadhlansulistiyo.codingstoryapp"
@@ -15,6 +21,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "BASE_URL", "\"$baseUrl\"")
     }
 
     buildTypes {

@@ -1,8 +1,6 @@
 package com.fadhlansulistiyo.codingstoryapp.data.response
 
 data class DetailStoriesResponse(
-	val error: Boolean? = null,
-	val message: String? = null,
 	val story: Story? = null
 )
 
