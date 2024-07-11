@@ -57,10 +57,12 @@ class UserRepository private constructor(
 
     suspend fun uploadStory(
         multipartFile: MultipartBody.Part,
-        description: RequestBody
+        description: RequestBody,
+        lat: Double? = null,
+        lon: Double? = null
     ): AddStoryResponse {
         return try {
-            apiService.uploadStory(multipartFile, description)
+            apiService.uploadStory(multipartFile, description, lat, lon)
         } catch (e: HttpException) {
             throw handleHttpException(e)
         }

@@ -1,5 +1,8 @@
 package com.fadhlansulistiyo.codingstoryapp.ui.addstory
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -9,6 +12,7 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.fadhlansulistiyo.codingstoryapp.R
 import com.fadhlansulistiyo.codingstoryapp.data.ResultState
 import com.fadhlansulistiyo.codingstoryapp.databinding.ActivityAddStoryBinding
@@ -16,6 +20,8 @@ import com.fadhlansulistiyo.codingstoryapp.ui.ViewModelFactory
 import com.fadhlansulistiyo.codingstoryapp.ui.util.getImageUri
 import com.fadhlansulistiyo.codingstoryapp.ui.util.reduceFileImage
 import com.fadhlansulistiyo.codingstoryapp.ui.util.uriToFile
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
 
 class AddStoryActivity : AppCompatActivity() {
@@ -27,6 +33,10 @@ class AddStoryActivity : AppCompatActivity() {
     private val viewModel by viewModels<AddStoryViewModel> {
         ViewModelFactory.getInstance(this)
     }
+
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private var currentLat: Double? = null
+    private var currentLon: Double? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +57,9 @@ class AddStoryActivity : AppCompatActivity() {
             buttonCamera.setOnClickListener { startCamera() }
             buttonAdd.setOnClickListener { uploadStory() }
         }
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        enableLocation()
     }
 
     // Action show gallery
@@ -91,7 +104,11 @@ class AddStoryActivity : AppCompatActivity() {
 
                         is ResultState.Success -> {
                             showLoading(false)
-                            showToast(result.data.message)
+                            if (currentLat != null && currentLon != null) {
+                                showToast(result.data.message + " with location")
+                            } else {
+                                showToast(result.data.message)
+                            }
                             finish()
                         }
 
@@ -108,6 +125,74 @@ class AddStoryActivity : AppCompatActivity() {
     private fun showImage() {
         currentImageUri?.let {
             binding.addStoryComponent.addStoryImageView.setImageURI(it)
+        }
+    }
+
+    private fun enableLocation() {
+        val switchEnableLocation = binding.addStoryComponent.switchEnableLocation
+        switchEnableLocation.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                requestLocationPermissions()
+            } else {
+                currentLat = null
+                currentLon = null
+            }
+        }
+    }
+
+    private fun requestLocationPermissions() {
+        if (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION) &&
+            checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
+        ) {
+            getCurrentLocation()
+        } else {
+            requestPermissionLauncher.launch(
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+            )
+        }
+    }
+
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permission ->
+            when {
+                permission[Manifest.permission.ACCESS_FINE_LOCATION] ?: false -> {
+                    getCurrentLocation()
+                }
+
+                permission[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false -> {
+                    getCurrentLocation()
+                }
+
+                else -> {
+                    showToast("Permission denied")
+                }
+            }
+        }
+
+    private fun checkPermission(permission: String): Boolean {
+        return ContextCompat.checkSelfPermission(
+            this,
+            permission
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun getCurrentLocation() {
+        if (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION) &&
+            checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
+        ) {
+            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+                if (location != null) {
+                    currentLat = location.latitude
+                    currentLon = location.longitude
+                } else {
+                    showToast("Location is not found. Try Again")
+                }
+            }
         }
     }
 

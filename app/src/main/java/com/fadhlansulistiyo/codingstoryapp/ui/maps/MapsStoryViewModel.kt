@@ -1,4 +1,4 @@
-package com.fadhlansulistiyo.codingstoryapp.maps
+package com.fadhlansulistiyo.codingstoryapp.ui.maps
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

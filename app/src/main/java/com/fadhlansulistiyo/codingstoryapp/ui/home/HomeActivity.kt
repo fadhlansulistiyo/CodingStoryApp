@@ -2,6 +2,7 @@ package com.fadhlansulistiyo.codingstoryapp.ui.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -13,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.fadhlansulistiyo.codingstoryapp.R
 import com.fadhlansulistiyo.codingstoryapp.data.ResultState
 import com.fadhlansulistiyo.codingstoryapp.databinding.ActivityHomeBinding
-import com.fadhlansulistiyo.codingstoryapp.maps.MapsStoryActivity
+import com.fadhlansulistiyo.codingstoryapp.ui.maps.MapsStoryActivity
 import com.fadhlansulistiyo.codingstoryapp.ui.ViewModelFactory
 import com.fadhlansulistiyo.codingstoryapp.ui.addstory.AddStoryActivity
 import com.fadhlansulistiyo.codingstoryapp.ui.main.MainActivity

@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.fadhlansulistiyo.codingstoryapp.data.UserRepository
 import com.fadhlansulistiyo.codingstoryapp.di.Injection
-import com.fadhlansulistiyo.codingstoryapp.maps.MapsStoryViewModel
+import com.fadhlansulistiyo.codingstoryapp.ui.maps.MapsStoryViewModel
 import com.fadhlansulistiyo.codingstoryapp.ui.addstory.AddStoryViewModel
 import com.fadhlansulistiyo.codingstoryapp.ui.detailstory.DetailStoriesViewModel
 import com.fadhlansulistiyo.codingstoryapp.ui.home.HomeViewModel

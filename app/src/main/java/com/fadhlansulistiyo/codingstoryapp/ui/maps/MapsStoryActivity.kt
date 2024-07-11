@@ -1,4 +1,4 @@
-package com.fadhlansulistiyo.codingstoryapp.maps
+package com.fadhlansulistiyo.codingstoryapp.ui.maps
 
 import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
@@ -64,13 +64,13 @@ class MapsStoryActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.uiSettings.isCompassEnabled = true
         mMap.uiSettings.isMapToolbarEnabled = true
 
+        setMapStyle()
+
         viewModel.mapsStories.value?.let { result ->
             if (result is ResultState.Success) {
                 addMarkers(result.data)
             }
         }
-
-        setMapStyle()
     }
 
     private fun observeMapStories() {
@@ -128,11 +128,11 @@ class MapsStoryActivity : AppCompatActivity(), OnMapReadyCallback {
         * Because sometimes there are stories located in countries outside Indonesia,
         * so the camera view (newLatLngBounds) doesn't zoom the stories properly.
         */
-        /*mapStories.firstOrNull()?.let { firstStory ->
+        /*mapStories.lastOrNull()?.let { firstStory ->
             firstStory.lat?.let { lat ->
                 firstStory.lon?.let { lon ->
                     val firstLocation = LatLng(lat, lon)
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(firstLocation, 5f))
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(firstLocation, 10f))
                 }
             }
         }*/

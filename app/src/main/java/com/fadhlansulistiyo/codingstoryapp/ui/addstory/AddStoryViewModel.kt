@@ -14,7 +14,12 @@ import java.io.File
 
 class AddStoryViewModel(private val repository: UserRepository) : ViewModel() {
 
-    fun uploadStory(imageFile: File, description: String): LiveData<ResultState<AddStoryResponse>> =
+    fun uploadStory(
+        imageFile: File,
+        description: String,
+        lat: Double? = null,
+        lon: Double? = null
+    ): LiveData<ResultState<AddStoryResponse>> =
         liveData {
             emit(ResultState.Loading)
             val requestBody = description.toRequestBody("text/plain".toMediaType())
@@ -25,7 +30,7 @@ class AddStoryViewModel(private val repository: UserRepository) : ViewModel() {
                 requestImageFile
             )
             try {
-                val response = repository.uploadStory(multipartBody, requestBody)
+                val response = repository.uploadStory(multipartBody, requestBody, lat, lon)
                 emit(ResultState.Success(response))
             } catch (e: Exception) {
                 emit(ResultState.Error(e.message ?: "Unknown error"))
