@@ -1,13 +1,22 @@
 package com.fadhlansulistiyo.codingstoryapp.data
 
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.liveData
+import com.fadhlansulistiyo.codingstoryapp.data.db.StoriesDatabase
+import com.fadhlansulistiyo.codingstoryapp.data.model.ListStoriesItem
 import com.fadhlansulistiyo.codingstoryapp.data.model.UserModel
+import com.fadhlansulistiyo.codingstoryapp.data.paging.StoriesRemoteMediator
 import com.fadhlansulistiyo.codingstoryapp.data.pref.UserPreference
 import com.fadhlansulistiyo.codingstoryapp.data.response.AddStoryResponse
 import com.fadhlansulistiyo.codingstoryapp.data.response.DetailStoriesResponse
 import com.fadhlansulistiyo.codingstoryapp.data.response.ErrorResponse
 import com.fadhlansulistiyo.codingstoryapp.data.response.LoginResponse
 import com.fadhlansulistiyo.codingstoryapp.data.response.RegisterResponse
-import com.fadhlansulistiyo.codingstoryapp.data.response.StoryResponse
 import com.fadhlansulistiyo.codingstoryapp.data.retrofit.ApiService
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
@@ -17,7 +26,8 @@ import retrofit2.HttpException
 
 class UserRepository private constructor(
     private val userPreference: UserPreference,
-    private val apiService: ApiService
+    private val apiService: ApiService,
+    private val database: StoriesDatabase
 ) {
 
     suspend fun login(email: String, password: String): LoginResponse {
@@ -39,12 +49,19 @@ class UserRepository private constructor(
         }
     }
 
-    suspend fun getStories(): StoryResponse {
-        return try {
-            apiService.getStories()
-        } catch (e: HttpException) {
-            throw handleHttpException(e)
-        }
+    fun getStories(): LiveData<PagingData<ListStoriesItem>> {
+        @OptIn(ExperimentalPagingApi::class)
+        return Pager(
+            config = PagingConfig(
+                pageSize = 5,
+                initialLoadSize = 10,
+                prefetchDistance = 1,
+            ),
+            remoteMediator = StoriesRemoteMediator(database, apiService),
+            pagingSourceFactory = {
+                database.storiesDao().getAllStories()
+            }
+        ).liveData
     }
 
     suspend fun getDetailStories(id: String): DetailStoriesResponse {
@@ -85,7 +102,7 @@ class UserRepository private constructor(
     }
 
     companion object {
-        fun getInstance(userPreference: UserPreference, apiService: ApiService) =
-            UserRepository(userPreference, apiService)
+        fun getInstance(userPreference: UserPreference, apiService: ApiService, database: StoriesDatabase) =
+            UserRepository(userPreference, apiService, database)
     }
 }

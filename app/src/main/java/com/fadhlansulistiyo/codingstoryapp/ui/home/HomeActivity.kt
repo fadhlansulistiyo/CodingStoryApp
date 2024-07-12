@@ -2,6 +2,7 @@ package com.fadhlansulistiyo.codingstoryapp.ui.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -40,38 +41,24 @@ class HomeActivity : AppCompatActivity() {
             MaterialColors.getColor(appBarLayout, R.attr.colorSurface)
         )
 
+        binding.recyclerViewStory.layoutManager = LinearLayoutManager(this)
+
         observeStories()
         addStory()
     }
 
     private fun observeStories() {
         val storyAdapter = ListStoryAdapter()
-        val layoutManager = LinearLayoutManager(this)
-        binding.recyclerViewStory.layoutManager = layoutManager
 
-        viewModel.getStories().observe(this) { result ->
-            if (result != null) {
-                when (result) {
-                    is ResultState.Loading -> {
-                        showLoading(true)
-                        showFab(false)
-                    }
-
-                    is ResultState.Success -> {
-                        showLoading(false)
-                        showFab(true)
-
-                        val storyData = result.data.listStory
-                        storyAdapter.submitList(storyData)
-                        binding.recyclerViewStory.adapter = storyAdapter
-                    }
-
-                    is ResultState.Error -> {
-                        showLoading(false)
-                        showToast(result.error)
-                    }
-                }
+        binding.recyclerViewStory.adapter = storyAdapter.withLoadStateFooter(
+            footer = LoadingStateAdapter {
+                storyAdapter.retry()
             }
+        )
+
+        viewModel.stories.observe(this) {
+            storyAdapter.submitData(lifecycle, it)
+            Log.d("HomeActivity", "observeStories: $it")
         }
     }
 

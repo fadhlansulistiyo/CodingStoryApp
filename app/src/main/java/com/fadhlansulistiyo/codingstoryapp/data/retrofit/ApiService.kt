@@ -1,5 +1,6 @@
 package com.fadhlansulistiyo.codingstoryapp.data.retrofit
 
+import com.fadhlansulistiyo.codingstoryapp.data.model.ListStoriesItem
 import com.fadhlansulistiyo.codingstoryapp.data.response.AddStoryResponse
 import com.fadhlansulistiyo.codingstoryapp.data.response.DetailStoriesResponse
 import com.fadhlansulistiyo.codingstoryapp.data.response.LoginResponse
@@ -34,8 +35,8 @@ interface ApiService {
 
     @GET("stories")
     suspend fun getStories(
-        @Query("page") page: Int = 1,
-        @Query("size") size: Int = 20
+        @Query("page") page: Int? = null,
+        @Query("size") size: Int? = null
     ): StoryResponse
 
     @GET("stories/{id}")
