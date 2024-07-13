@@ -1,5 +1,6 @@
 package com.fadhlansulistiyo.codingstoryapp.ui.addstory
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -13,6 +14,7 @@ import com.fadhlansulistiyo.codingstoryapp.R
 import com.fadhlansulistiyo.codingstoryapp.data.ResultState
 import com.fadhlansulistiyo.codingstoryapp.databinding.ActivityAddStoryBinding
 import com.fadhlansulistiyo.codingstoryapp.ui.ViewModelFactory
+import com.fadhlansulistiyo.codingstoryapp.ui.home.HomeActivity
 import com.fadhlansulistiyo.codingstoryapp.ui.util.getImageUri
 import com.fadhlansulistiyo.codingstoryapp.ui.util.reduceFileImage
 import com.fadhlansulistiyo.codingstoryapp.ui.util.uriToFile
@@ -92,6 +94,10 @@ class AddStoryActivity : AppCompatActivity() {
                         is ResultState.Success -> {
                             showLoading(false)
                             showToast(result.data.message)
+                            val intent = Intent(this, HomeActivity::class.java).apply {
+                                flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                            }
+                            startActivity(intent)
                             finish()
                         }
 

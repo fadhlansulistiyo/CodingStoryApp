@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fadhlansulistiyo.codingstoryapp.R
 import com.fadhlansulistiyo.codingstoryapp.data.ResultState
@@ -60,6 +61,28 @@ class HomeActivity : AppCompatActivity() {
             storyAdapter.submitData(lifecycle, it)
             Log.d("HomeActivity", "observeStories: $it")
         }
+
+        storyAdapter.addLoadStateListener { loadState ->
+            when (loadState.refresh) {
+                is LoadState.Loading -> {
+                    showLoading(true)
+                    showFab(false)
+                }
+                is LoadState.NotLoading -> {
+                    showLoading(false)
+                    showFab(true)
+                }
+                is LoadState.Error -> {
+                    showLoading(false)
+                    val errorState = loadState.refresh as LoadState.Error
+                    showToast(errorState.error.message.toString())
+                }
+            }
+
+            if (loadState.source.append.endOfPaginationReached && storyAdapter.itemCount < 1) {
+                showToast("No stories available")
+            }
+        }
     }
 
     private fun logout() {
@@ -90,7 +113,6 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        observeStories()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
