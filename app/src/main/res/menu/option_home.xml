@@ -5,7 +5,7 @@
         android:id="@+id/action_add_story"
         android:title="@string/add_story"
         android:icon="@drawable/add_a_photo"
-        app:showAsAction="always|ifRoom"/>
+        app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_maps"
         android:title="@string/maps"

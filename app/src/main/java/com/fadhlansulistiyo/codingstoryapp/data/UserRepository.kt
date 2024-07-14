@@ -17,6 +17,7 @@ import com.fadhlansulistiyo.codingstoryapp.data.response.DetailStoriesResponse
 import com.fadhlansulistiyo.codingstoryapp.data.response.ErrorResponse
 import com.fadhlansulistiyo.codingstoryapp.data.response.LoginResponse
 import com.fadhlansulistiyo.codingstoryapp.data.response.RegisterResponse
+import com.fadhlansulistiyo.codingstoryapp.data.response.StoryResponse
 import com.fadhlansulistiyo.codingstoryapp.data.retrofit.ApiService
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow

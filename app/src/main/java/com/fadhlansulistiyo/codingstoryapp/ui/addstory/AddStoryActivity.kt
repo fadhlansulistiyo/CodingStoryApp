@@ -1,6 +1,7 @@
 package com.fadhlansulistiyo.codingstoryapp.ui.addstory
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.net.Uri
@@ -17,6 +18,7 @@ import com.fadhlansulistiyo.codingstoryapp.R
 import com.fadhlansulistiyo.codingstoryapp.data.ResultState
 import com.fadhlansulistiyo.codingstoryapp.databinding.ActivityAddStoryBinding
 import com.fadhlansulistiyo.codingstoryapp.ui.ViewModelFactory
+import com.fadhlansulistiyo.codingstoryapp.ui.home.HomeActivity
 import com.fadhlansulistiyo.codingstoryapp.ui.util.getImageUri
 import com.fadhlansulistiyo.codingstoryapp.ui.util.reduceFileImage
 import com.fadhlansulistiyo.codingstoryapp.ui.util.uriToFile

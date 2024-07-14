@@ -20,8 +20,8 @@
             android:layout_height="wrap_content"
             app:layout_scrollFlags="scroll|enterAlways|snap"
             app:title="@string/app_name"
-            app:titleTextColor="@color/md_theme_onPrimaryContainer"
-            app:titleTextAppearance="@style/TextAppearance.Material3.TitleLarge" />
+            app:titleTextAppearance="@style/TextAppearance.Material3.TitleLarge"
+            app:titleTextColor="@color/md_theme_onPrimaryContainer" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
@@ -54,7 +54,8 @@
         android:id="@+id/fab_scroll_to_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
         android:contentDescription="@string/scroll_to_top"
         android:foregroundGravity="bottom"
         android:visibility="gone"
