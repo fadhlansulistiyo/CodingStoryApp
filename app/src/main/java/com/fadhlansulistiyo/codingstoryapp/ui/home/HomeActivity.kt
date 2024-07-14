@@ -12,6 +12,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.fadhlansulistiyo.codingstoryapp.R
 import com.fadhlansulistiyo.codingstoryapp.data.ResultState
 import com.fadhlansulistiyo.codingstoryapp.databinding.ActivityHomeBinding
@@ -44,8 +45,28 @@ class HomeActivity : AppCompatActivity() {
 
         binding.recyclerViewStory.layoutManager = LinearLayoutManager(this)
 
+        setupScrollListener()
+        setupScrollToTopFab()
         observeStories()
-        addStory()
+    }
+
+    private fun setupScrollListener() {
+        binding.recyclerViewStory.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 0) {
+                    binding.fabScrollToTop.show()
+                } else {
+                    binding.fabScrollToTop.hide()
+                }
+            }
+        })
+    }
+
+    private fun setupScrollToTopFab() {
+        binding.fabScrollToTop.setOnClickListener {
+            binding.recyclerViewStory.smoothScrollToPosition(0)
+        }
     }
 
     private fun observeStories() {
@@ -59,18 +80,15 @@ class HomeActivity : AppCompatActivity() {
 
         viewModel.stories.observe(this) {
             storyAdapter.submitData(lifecycle, it)
-            Log.d("HomeActivity", "observeStories: $it")
         }
 
         storyAdapter.addLoadStateListener { loadState ->
             when (loadState.refresh) {
                 is LoadState.Loading -> {
                     showLoading(true)
-                    showFab(false)
                 }
                 is LoadState.NotLoading -> {
                     showLoading(false)
-                    showFab(true)
                 }
                 is LoadState.Error -> {
                     showLoading(false)
@@ -90,17 +108,6 @@ class HomeActivity : AppCompatActivity() {
         val intent = Intent(this@HomeActivity, MainActivity::class.java)
         startActivity(intent)
         finish()
-    }
-
-    private fun showFab(isVisible: Boolean) {
-        binding.fabAddStory.visibility = if (isVisible) View.VISIBLE else View.GONE
-    }
-
-    private fun addStory() {
-        binding.fabAddStory.setOnClickListener {
-            val intent = Intent(this, AddStoryActivity::class.java)
-            startActivity(intent)
-        }
     }
 
     private fun showLoading(isLoading: Boolean) {
@@ -126,7 +133,11 @@ class HomeActivity : AppCompatActivity() {
                 logout()
                 true
             }
-
+            R.id.action_add_story -> {
+                val intent = Intent(this, AddStoryActivity::class.java)
+                startActivity(intent)
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

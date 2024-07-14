@@ -36,4 +36,6 @@
     <string name="example_email_com">example@email.com</string>
     <string name="splash_screen">Splash Screen</string>
     <string name="retry">Try Again</string>
+    <string name="scroll_to_top">Scroll to Top</string>
+    <string name="there_is_a_new_story">There is a New Story!</string>
 </resources>

@@ -54,8 +54,6 @@ class UserRepository private constructor(
         return Pager(
             config = PagingConfig(
                 pageSize = 5,
-                initialLoadSize = 10,
-                prefetchDistance = 1,
             ),
             remoteMediator = StoriesRemoteMediator(database, apiService),
             pagingSourceFactory = {
