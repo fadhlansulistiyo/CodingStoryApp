@@ -24,7 +24,7 @@
             app:titleTextAppearance="@style/TextAppearance.Material3.TitleLarge" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
@@ -33,7 +33,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_story"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
 
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -41,27 +41,27 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/item_story" />
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
 
     <ProgressBar
         android:id="@+id/main_progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:visibility="gone" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_add_story"
+        android:id="@+id/fab_scroll_to_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:contentDescription="@string/add_story"
+        android:contentDescription="@string/scroll_to_top"
         android:foregroundGravity="bottom"
         android:visibility="gone"
         app:fabSize="normal"
         app:layout_anchor="@id/recycler_view_story"
         app:layout_anchorGravity="bottom|end"
-        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
-        app:srcCompat="@drawable/ic_add"
+        app:srcCompat="@drawable/arrow_up"
         tools:visibility="visible" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

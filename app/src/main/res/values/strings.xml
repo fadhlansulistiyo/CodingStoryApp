@@ -38,4 +38,7 @@
     <string name="title_activity_maps_story">MapsStoryActivity</string>
     <string name="maps">Maps</string>
     <string name="enable_location">Enable Location</string>
+    <string name="retry">Try Again</string>
+    <string name="scroll_to_top">Scroll to Top</string>
+    <string name="there_is_a_new_story">There is a New Story!</string>
 </resources>

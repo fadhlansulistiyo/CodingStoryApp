@@ -4,20 +4,20 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.fadhlansulistiyo.codingstoryapp.data.response.ListStoryItem
+import com.fadhlansulistiyo.codingstoryapp.data.model.ListStoriesItem
 import com.fadhlansulistiyo.codingstoryapp.databinding.ItemStoryBinding
 import com.fadhlansulistiyo.codingstoryapp.ui.detailstory.DetailStoriesActivity
 import com.fadhlansulistiyo.codingstoryapp.ui.util.DateFormatter
 import java.util.TimeZone
 
-class ListStoryAdapter : ListAdapter<ListStoryItem, ListStoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class ListStoryAdapter : PagingDataAdapter<ListStoriesItem, ListStoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     class MyViewHolder(val binding: ItemStoryBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: ListStoryItem) {
+        fun bind(item: ListStoriesItem) {
             binding.tvItemName.text = item.name
             binding.tvItemDescription.text = item.description
             binding.tvItemDate.text =
@@ -45,25 +45,27 @@ class ListStoryAdapter : ListAdapter<ListStoryItem, ListStoryAdapter.MyViewHolde
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val story = getItem(position)
-        holder.bind(story)
+        if (story != null) {
+            holder.bind(story)
+        }
     }
 
     companion object {
-        val DIFF_CALLBACK: DiffUtil.ItemCallback<ListStoryItem> =
-            object : DiffUtil.ItemCallback<ListStoryItem>() {
+        val DIFF_CALLBACK: DiffUtil.ItemCallback<ListStoriesItem> =
+            object : DiffUtil.ItemCallback<ListStoriesItem>() {
                 override fun areItemsTheSame(
-                    oldItem: ListStoryItem,
-                    newItem: ListStoryItem
+                    oldItem: ListStoriesItem,
+                    newItem: ListStoriesItem
                 ): Boolean {
-                    return oldItem.name == newItem.name
+                    return oldItem == newItem
                 }
 
                 @SuppressLint("DiffUtilEquals")
                 override fun areContentsTheSame(
-                    oldItem: ListStoryItem,
-                    newItem: ListStoryItem
+                    oldItem: ListStoriesItem,
+                    newItem: ListStoriesItem
                 ): Boolean {
-                    return oldItem == newItem
+                    return oldItem.id == newItem.id
                 }
             }
     }
