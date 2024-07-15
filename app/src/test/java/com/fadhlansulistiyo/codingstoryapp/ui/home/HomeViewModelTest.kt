@@ -15,6 +15,7 @@ import com.fadhlansulistiyo.codingstoryapp.data.model.ListStoriesItem
 import com.fadhlansulistiyo.codingstoryapp.getOrAwaitValue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
 import org.junit.Rule
@@ -22,6 +23,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
 
 @ExperimentalCoroutinesApi
@@ -76,6 +78,21 @@ class HomeViewModelTest {
         differ.submitData(actualStories)
 
         assertEquals(0, differ.snapshot().size)
+    }
+
+    @Test
+    fun `when Logout Should Call Repository Logout`() = runTest {
+        runBlocking {
+            Mockito.`when`(repository.logout()).thenReturn(Unit)
+            Mockito.`when`(repository.getStories()).thenReturn(MutableLiveData())
+        }
+
+        val viewModel = HomeViewModel(repository)
+        viewModel.logout()
+
+        runBlocking {
+            verify(repository).logout()
+        }
     }
 
     class StoriesPagingSource : PagingSource<Int, LiveData<List<ListStoriesItem>>>() {
