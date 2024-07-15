@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -46,33 +47,18 @@ class AddStoryActivity : AppCompatActivity() {
         _binding = ActivityAddStoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Set Up Toolbar
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.apply {
-            setDisplayHomeAsUpEnabled(true)
-            setDisplayShowHomeEnabled(true)
-        }
-
-        // Set Up Action
-        binding.addStoryComponent.apply {
-            buttonGallery.setOnClickListener { startGallery() }
-            buttonCamera.setOnClickListener { startCamera() }
-            buttonAdd.setOnClickListener { uploadStory() }
-        }
-
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        enableLocation()
+        setupToolbar()
+        setupActions()
+        setupLocationClient()
     }
 
     // Action show gallery
     private val launcherGallery =
         registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri: Uri? ->
-            if (uri != null) {
-                currentImageUri = uri
+            uri?.let {
+                currentImageUri = it
                 showImage()
-            } else {
-                showSnackbar("No Media Selected")
-            }
+            } ?: showSnackbar("No Media Selected")
         }
 
     // Action start camera
@@ -80,6 +66,9 @@ class AddStoryActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess ->
             if (isSuccess) {
                 showImage()
+            } else {
+                showSnackbar("No photos were captured")
+                currentImageUri = null
             }
         }
 
@@ -100,28 +89,9 @@ class AddStoryActivity : AppCompatActivity() {
             viewModel.uploadStory(imageFIle, description).observe(this) { result ->
                 if (result != null) {
                     when (result) {
-                        is ResultState.Loading -> {
-                            showLoading(true)
-                        }
-
-                        is ResultState.Success -> {
-                            showLoading(false)
-                            if (currentLat != null && currentLon != null) {
-                                showToast(result.data.message + " with location")
-                            } else {
-                                showToast(result.data.message)
-                            }
-                            val intent = Intent(this, HomeActivity::class.java).apply {
-                                flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                            }
-                            startActivity(intent)
-                            finish()
-                        }
-
-                        is ResultState.Error -> {
-                            showLoading(false)
-                            showSnackbar(result.error)
-                        }
+                        is ResultState.Loading -> showLoading(true)
+                        is ResultState.Success -> handleUploadSuccess(result.data.message.toString())
+                        is ResultState.Error -> handleError(result.error)
                     }
                 }
             }
@@ -152,8 +122,7 @@ class AddStoryActivity : AppCompatActivity() {
         ) {
             getCurrentLocation()
         } else {
-            requestPermissionLauncher.launch(
-                arrayOf(
+            requestPermissionLauncher.launch(arrayOf(
                     Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.ACCESS_COARSE_LOCATION
                 )
@@ -202,6 +171,42 @@ class AddStoryActivity : AppCompatActivity() {
         }
     }
 
+    private fun handleUploadSuccess(message: String) {
+        showLoading(false)
+        val locationMessage = if (currentLat != null && currentLon != null) {
+            "$message with location"
+        } else {
+            message
+        }
+        showToast(locationMessage)
+        startActivity(Intent(this, HomeActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        })
+        finish()
+    }
+
+    private fun handleError(error: String) {
+        showLoading(false)
+        showSnackbar(error)
+        Log.e("AddStoryActivity", "uploadStory: $error")
+    }
+
+    private fun setupToolbar() {
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
+        }
+    }
+
+    private fun setupActions() {
+        binding.addStoryComponent.apply {
+            buttonGallery.setOnClickListener { startGallery() }
+            buttonCamera.setOnClickListener { startCamera() }
+            buttonAdd.setOnClickListener { uploadStory() }
+        }
+    }
+
     private fun showToast(message: String?) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
@@ -217,6 +222,11 @@ class AddStoryActivity : AppCompatActivity() {
             message,
             Snackbar.LENGTH_SHORT
         ).show()
+    }
+
+    private fun setupLocationClient() {
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        enableLocation()
     }
 
     override fun onSupportNavigateUp(): Boolean {

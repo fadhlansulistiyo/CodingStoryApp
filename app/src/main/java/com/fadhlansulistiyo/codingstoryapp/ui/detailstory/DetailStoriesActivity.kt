@@ -8,6 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.fadhlansulistiyo.codingstoryapp.R
 import com.fadhlansulistiyo.codingstoryapp.data.ResultState
 import com.fadhlansulistiyo.codingstoryapp.data.response.Story
 import com.fadhlansulistiyo.codingstoryapp.databinding.ActivityDetailStoriesBinding
@@ -35,39 +36,31 @@ class DetailStoriesActivity : AppCompatActivity() {
         _binding = ActivityDetailStoriesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val id = intent.getStringExtra(EXTRA_ID)
-        val name = intent.getStringExtra(EXTRA_NAME)
+        val id = intent.getStringExtra(EXTRA_ID) ?: return
+        val name = intent.getStringExtra(EXTRA_NAME) ?: getString(R.string.name)
 
-        // Set Up Toolbar
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.apply {
-            setDisplayHomeAsUpEnabled(true)
-            setDisplayShowHomeEnabled(true)
-            title = name
-        }
-
-        observeDetailStories(id.toString())
+        setupToolbar(name)
+        observeDetailStories(id)
     }
 
     private fun observeDetailStories(id: String) {
         viewModel.getDetailStories(id).observe(this) { result ->
-            if (result != null) {
-                when (result) {
-                    is ResultState.Loading -> {
-                        showLoading(true)
-                    }
+            when (result) {
+                is ResultState.Loading -> {
+                    showLoading(true)
+                }
 
-                    is ResultState.Success -> {
-                        showLoading(false)
-                        result.data.story?.let { setDetailStory(it) }
-                    }
+                is ResultState.Success -> {
+                    showLoading(false)
+                    result.data.story?.let { setDetailStory(it) }
+                }
 
-                    is ResultState.Error -> {
-                        showLoading(false)
-                        showToast(result.error)
-                    }
+                is ResultState.Error -> {
+                    showLoading(false)
+                    showToast(result.error)
                 }
             }
+
         }
     }
 
@@ -81,6 +74,15 @@ class DetailStoriesActivity : AppCompatActivity() {
             Glide.with(this@DetailStoriesActivity)
                 .load(story.photoUrl)
                 .into(ivDetailPhoto)
+        }
+    }
+
+    private fun setupToolbar(name: String) {
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
+            title = name
         }
     }
 

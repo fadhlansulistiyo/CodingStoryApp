@@ -37,16 +37,8 @@ class HomeActivity : AppCompatActivity() {
         _binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Set Up Toolbar
-        val appBarLayout = binding.appBarLayout
-        setSupportActionBar(binding.toolbar)
-        binding.appBarLayout.setStatusBarForegroundColor(
-            MaterialColors.getColor(appBarLayout, R.attr.colorSurface)
-        )
-
-        storyAdapter = ListStoryAdapter()
-        binding.recyclerViewStory.layoutManager = LinearLayoutManager(this)
-
+        setupToolbar()
+        setupRecyclerView()
         setupScrollListener()
         setupScrollToTopFab()
         observeStories()
@@ -57,6 +49,11 @@ class HomeActivity : AppCompatActivity() {
         viewModel.stories.observe(this) {
             storyAdapter.submitData(lifecycle, it)
         }
+    }
+
+    private fun setupRecyclerView() {
+        storyAdapter = ListStoryAdapter()
+        binding.recyclerViewStory.layoutManager = LinearLayoutManager(this)
 
         binding.recyclerViewStory.adapter = storyAdapter.withLoadStateFooter(
             footer = LoadingStateAdapter {
@@ -68,17 +65,19 @@ class HomeActivity : AppCompatActivity() {
             when (loadState.refresh) {
                 is LoadState.Loading -> {
                     showLoading(true)
-
+                    binding.fabScrollToTop.hide()
                 }
 
                 is LoadState.NotLoading -> {
                     showLoading(false)
+                    binding.fabScrollToTop.show()
                 }
 
                 is LoadState.Error -> {
                     showLoading(false)
                     val errorState = loadState.refresh as LoadState.Error
                     showToast(errorState.error.message.toString())
+                    binding.fabScrollToTop.hide()
                 }
             }
         }
@@ -144,6 +143,13 @@ class HomeActivity : AppCompatActivity() {
 
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun setupToolbar() {
+        setSupportActionBar(binding.toolbar)
+        binding.appBarLayout.setStatusBarForegroundColor(
+            MaterialColors.getColor(binding.appBarLayout, R.attr.colorSurface)
+        )
     }
 
     private fun showLoading(isLoading: Boolean) {
