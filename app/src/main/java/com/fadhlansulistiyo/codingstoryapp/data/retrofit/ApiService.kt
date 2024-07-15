@@ -1,6 +1,5 @@
 package com.fadhlansulistiyo.codingstoryapp.data.retrofit
 
-import com.fadhlansulistiyo.codingstoryapp.data.model.ListStoriesItem
 import com.fadhlansulistiyo.codingstoryapp.data.response.AddStoryResponse
 import com.fadhlansulistiyo.codingstoryapp.data.response.DetailStoriesResponse
 import com.fadhlansulistiyo.codingstoryapp.data.response.LoginResponse

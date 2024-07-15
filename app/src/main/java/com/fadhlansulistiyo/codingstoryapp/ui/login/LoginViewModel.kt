@@ -1,6 +1,5 @@
 package com.fadhlansulistiyo.codingstoryapp.ui.login
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
@@ -16,7 +15,6 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
             emit(ResultState.Success(response))
         } catch (e: Exception) {
             emit(ResultState.Error(e.message ?: "Unknown error"))
-            Log.d("LoginViewModel", "login: ${e.message}")
         }
     }
 }

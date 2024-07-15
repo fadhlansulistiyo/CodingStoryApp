@@ -106,7 +106,6 @@ class AddStoryActivity : AppCompatActivity() {
 
                         is ResultState.Success -> {
                             showLoading(false)
-                            showToast(result.data.message)
                             if (currentLat != null && currentLon != null) {
                                 showToast(result.data.message + " with location")
                             } else {

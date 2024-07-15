@@ -1,6 +1,5 @@
 package com.fadhlansulistiyo.codingstoryapp.data.paging
 
-import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -78,7 +77,6 @@ class StoriesRemoteMediator(
                     )
                 }
                 database.storiesDao().insertStories(stories)
-                Log.d("StoriesRemoteMediator", "load: $responseData")
             }
             return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
         } catch (exception: Exception) {

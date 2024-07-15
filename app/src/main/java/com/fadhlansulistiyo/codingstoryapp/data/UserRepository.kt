@@ -1,6 +1,5 @@
 package com.fadhlansulistiyo.codingstoryapp.data
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager

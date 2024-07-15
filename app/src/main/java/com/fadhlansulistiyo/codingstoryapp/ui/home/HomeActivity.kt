@@ -2,7 +2,6 @@ package com.fadhlansulistiyo.codingstoryapp.ui.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -14,12 +13,11 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fadhlansulistiyo.codingstoryapp.R
-import com.fadhlansulistiyo.codingstoryapp.data.ResultState
 import com.fadhlansulistiyo.codingstoryapp.databinding.ActivityHomeBinding
-import com.fadhlansulistiyo.codingstoryapp.ui.maps.MapsStoryActivity
 import com.fadhlansulistiyo.codingstoryapp.ui.ViewModelFactory
 import com.fadhlansulistiyo.codingstoryapp.ui.addstory.AddStoryActivity
 import com.fadhlansulistiyo.codingstoryapp.ui.main.MainActivity
+import com.fadhlansulistiyo.codingstoryapp.ui.maps.MapsStoryActivity
 import com.google.android.material.color.MaterialColors
 
 class HomeActivity : AppCompatActivity() {
@@ -49,6 +47,58 @@ class HomeActivity : AppCompatActivity() {
         setupScrollListener()
         setupScrollToTopFab()
         observeStories()
+        observeNewData()
+    }
+
+    private fun observeStories() {
+        val storyAdapter = ListStoryAdapter()
+
+        binding.recyclerViewStory.adapter = storyAdapter.withLoadStateFooter(
+            footer = LoadingStateAdapter {
+                storyAdapter.retry()
+            }
+        )
+
+        viewModel.stories.observe(this) {
+            storyAdapter.submitData(lifecycle, it)
+        }
+
+        storyAdapter.addLoadStateListener { loadState ->
+            when (loadState.refresh) {
+                is LoadState.Loading -> {
+                    showLoading(true)
+                }
+
+                is LoadState.NotLoading -> {
+                    showLoading(false)
+                }
+
+                is LoadState.Error -> {
+                    showLoading(false)
+                    val errorState = loadState.refresh as LoadState.Error
+                    showToast(errorState.error.message.toString())
+                }
+            }
+
+            if (loadState.source.append.endOfPaginationReached && storyAdapter.itemCount < 1) {
+                showToast("No stories available")
+            }
+        }
+    }
+
+    private fun observeNewData() {
+        viewModel.hasNewData.observe(this) { hasNewData ->
+            if (hasNewData) {
+                binding.fabScrollToTop.show()
+            }
+        }
+    }
+
+    private fun logout() {
+        viewModel.logout()
+        val intent = Intent(this@HomeActivity, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     private fun setupScrollListener() {
@@ -70,59 +120,6 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun observeStories() {
-        val storyAdapter = ListStoryAdapter()
-
-        binding.recyclerViewStory.adapter = storyAdapter.withLoadStateFooter(
-            footer = LoadingStateAdapter {
-                storyAdapter.retry()
-            }
-        )
-
-        viewModel.stories.observe(this) {
-            storyAdapter.submitData(lifecycle, it)
-        }
-
-        storyAdapter.addLoadStateListener { loadState ->
-            when (loadState.refresh) {
-                is LoadState.Loading -> {
-                    showLoading(true)
-                }
-                is LoadState.NotLoading -> {
-                    showLoading(false)
-                }
-                is LoadState.Error -> {
-                    showLoading(false)
-                    val errorState = loadState.refresh as LoadState.Error
-                    showToast(errorState.error.message.toString())
-                }
-            }
-
-            if (loadState.source.append.endOfPaginationReached && storyAdapter.itemCount < 1) {
-                showToast("No stories available")
-            }
-        }
-    }
-
-    private fun logout() {
-        viewModel.logout()
-        val intent = Intent(this@HomeActivity, MainActivity::class.java)
-        startActivity(intent)
-        finish()
-    }
-
-    private fun showLoading(isLoading: Boolean) {
-        binding.mainProgressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-    }
-
-    private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onResume() {
-        super.onResume()
-    }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.option_home, menu)
         return true
@@ -134,18 +131,29 @@ class HomeActivity : AppCompatActivity() {
                 logout()
                 true
             }
+
             R.id.action_add_story -> {
                 val intent = Intent(this, AddStoryActivity::class.java)
                 startActivity(intent)
                 true
             }
+
             R.id.action_maps -> {
                 val intent = Intent(this, MapsStoryActivity::class.java)
                 startActivity(intent)
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.mainProgressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroy() {
