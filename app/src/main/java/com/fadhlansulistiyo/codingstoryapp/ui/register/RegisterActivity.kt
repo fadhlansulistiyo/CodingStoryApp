@@ -68,28 +68,26 @@ class RegisterActivity : AppCompatActivity() {
             }
 
             viewModel.register(name, email, password).observe(this) { result ->
-                if (result != null) {
-                    when (result) {
-                        is ResultState.Loading -> {
-                            showLoading(true)
-                        }
+                when (result) {
+                    is ResultState.Loading -> {
+                        showLoading(true)
+                    }
 
-                        is ResultState.Success -> {
-                            showLoading(false)
-                            showToast(result.data.message)
+                    is ResultState.Success -> {
+                        showLoading(false)
+                        showToast(result.data.message)
 
-                            // if success
-                            val intent = Intent(this, LoginActivity::class.java)
-                            intent.flags =
-                                Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                            startActivity(intent)
-                            finish()
-                        }
+                        // if success
+                        val intent = Intent(this, LoginActivity::class.java)
+                        intent.flags =
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                        startActivity(intent)
+                        finish()
+                    }
 
-                        is ResultState.Error -> {
-                            showLoading(false)
-                            showToast(result.error)
-                        }
+                    is ResultState.Error -> {
+                        showLoading(false)
+                        showToast(result.error)
                     }
                 }
             }

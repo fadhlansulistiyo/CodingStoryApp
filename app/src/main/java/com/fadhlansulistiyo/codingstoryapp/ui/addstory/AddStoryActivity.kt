@@ -87,12 +87,10 @@ class AddStoryActivity : AppCompatActivity() {
             val description = binding.addStoryComponent.edAddDescription.text.toString()
 
             viewModel.uploadStory(imageFIle, description).observe(this) { result ->
-                if (result != null) {
-                    when (result) {
-                        is ResultState.Loading -> showLoading(true)
-                        is ResultState.Success -> handleUploadSuccess(result.data.message.toString())
-                        is ResultState.Error -> handleError(result.error)
-                    }
+                when (result) {
+                    is ResultState.Loading -> showLoading(true)
+                    is ResultState.Success -> handleUploadSuccess(result.data.message.toString())
+                    is ResultState.Error -> handleError(result.error)
                 }
             }
         } ?: showSnackbar(getString(R.string.empty_image_warning))
