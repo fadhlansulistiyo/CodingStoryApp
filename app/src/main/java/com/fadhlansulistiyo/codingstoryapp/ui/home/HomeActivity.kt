@@ -29,6 +29,8 @@ class HomeActivity : AppCompatActivity() {
         ViewModelFactory.getInstance(this)
     }
 
+    private lateinit var storyAdapter: ListStoryAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -42,6 +44,7 @@ class HomeActivity : AppCompatActivity() {
             MaterialColors.getColor(appBarLayout, R.attr.colorSurface)
         )
 
+        storyAdapter = ListStoryAdapter()
         binding.recyclerViewStory.layoutManager = LinearLayoutManager(this)
 
         setupScrollListener()
@@ -51,7 +54,9 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun observeStories() {
-        val storyAdapter = ListStoryAdapter()
+        viewModel.stories.observe(this) {
+            storyAdapter.submitData(lifecycle, it)
+        }
 
         binding.recyclerViewStory.adapter = storyAdapter.withLoadStateFooter(
             footer = LoadingStateAdapter {
@@ -59,14 +64,11 @@ class HomeActivity : AppCompatActivity() {
             }
         )
 
-        viewModel.stories.observe(this) {
-            storyAdapter.submitData(lifecycle, it)
-        }
-
         storyAdapter.addLoadStateListener { loadState ->
             when (loadState.refresh) {
                 is LoadState.Loading -> {
                     showLoading(true)
+
                 }
 
                 is LoadState.NotLoading -> {

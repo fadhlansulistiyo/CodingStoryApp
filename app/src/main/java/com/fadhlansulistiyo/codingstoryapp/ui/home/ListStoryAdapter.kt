@@ -60,7 +60,6 @@ class ListStoryAdapter : PagingDataAdapter<ListStoriesItem, ListStoryAdapter.MyV
                     return oldItem == newItem
                 }
 
-                @SuppressLint("DiffUtilEquals")
                 override fun areContentsTheSame(
                     oldItem: ListStoriesItem,
                     newItem: ListStoriesItem
