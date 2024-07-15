@@ -81,10 +81,6 @@ class HomeActivity : AppCompatActivity() {
                     showToast(errorState.error.message.toString())
                 }
             }
-
-            if (loadState.source.append.endOfPaginationReached && storyAdapter.itemCount < 1) {
-                showToast("No stories available")
-            }
         }
     }
 
