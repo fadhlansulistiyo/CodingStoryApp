@@ -1,6 +1,5 @@
 package com.fadhlansulistiyo.codingstoryapp.ui.home
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup

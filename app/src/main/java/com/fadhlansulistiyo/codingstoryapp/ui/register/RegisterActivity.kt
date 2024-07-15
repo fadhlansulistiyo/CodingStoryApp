@@ -76,7 +76,7 @@ class RegisterActivity : AppCompatActivity() {
 
                         is ResultState.Success -> {
                             showLoading(false)
-                            showSnackbar(this, result.data.message)
+                            showToast(result.data.message)
 
                             // if success
                             val intent = Intent(this, LoginActivity::class.java)
@@ -106,14 +106,6 @@ class RegisterActivity : AppCompatActivity() {
     private fun setupValidators() {
         binding.edRegisterEmail.setValidator(EmailValidator())
         binding.edRegisterPassword.setValidator(PasswordValidator())
-    }
-
-    private fun showSnackbar(activity: Activity, message: String) {
-        Snackbar.make(
-            activity.findViewById(android.R.id.content),
-            message,
-            Snackbar.LENGTH_SHORT
-        ).show()
     }
 
     private fun playAnimation() {

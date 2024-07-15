@@ -130,7 +130,7 @@ class MapsStoryActivity : AppCompatActivity(), OnMapReadyCallback {
         /*mapStories.lastOrNull()?.let { firstStory ->
             firstStory.lat?.let { lat ->
                 firstStory.lon?.let { lon ->
-                    val firstLocation = LatLng(lat, lon)
+                    val lastLocation = LatLng(lat, lon)
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(firstLocation, 10f))
                 }
             }

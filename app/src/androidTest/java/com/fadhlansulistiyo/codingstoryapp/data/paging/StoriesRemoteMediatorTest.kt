@@ -17,7 +17,6 @@ import com.fadhlansulistiyo.codingstoryapp.data.response.LoginResponse
 import com.fadhlansulistiyo.codingstoryapp.data.response.RegisterResponse
 import com.fadhlansulistiyo.codingstoryapp.data.response.StoryResponse
 import com.fadhlansulistiyo.codingstoryapp.data.retrofit.ApiService
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
