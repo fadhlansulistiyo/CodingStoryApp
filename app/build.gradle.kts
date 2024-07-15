@@ -8,10 +8,6 @@ plugins {
     id("kotlin-parcelize")
 }
 
-val properties = Properties()
-project.rootProject.file("local.properties").inputStream().use { properties.load(it) }
-val baseUrl: String = properties.getProperty("BASE_URL")
-
 android {
     namespace = "com.fadhlansulistiyo.codingstoryapp"
     compileSdk = 34
@@ -24,7 +20,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "BASE_URL", "\"$baseUrl\"")
+        buildConfigField("String", "BASE_URL", "\"https://story-api.dicoding.dev/v1/\"")
     }
 
     buildTypes {
