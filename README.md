@@ -6,6 +6,8 @@ This is an Android application designed for sharing stories from the Dicoding ac
 
 Here are some screenshots demonstrating the application features:
 
+<img src="screenshots/login.png" alt="Login" width="250"/> <img src="screenshots/register.png" alt="Register" width="250"/> <img src="screenshots/home.png" alt="Home Screen" width="250"/> <img src="screenshots/detail.png" alt="Detail Screen" width="250"/> <img src="screenshots/add_story.png" alt="Add Story" width="250"/> <img src="screenshots/add_story_from_camera.png" alt="Add Story" width="250"/> <img src="screenshots/add_story_from_gallery.png" alt="Add Story" width="250"/> <img src="screenshots/maps_stories.png" alt="Add Story" width="250"/>
+
 ## Features
 
 - **Stories Sharing**: Share your stories from the Dicoding academy.
