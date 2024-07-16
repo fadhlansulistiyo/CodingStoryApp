@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -58,7 +57,7 @@ class AddStoryActivity : AppCompatActivity() {
             uri?.let {
                 currentImageUri = it
                 showImage()
-            } ?: showSnackbar("No Media Selected")
+            } ?: showSnackbar(getString(R.string.no_media_selected))
         }
 
     // Action start camera
@@ -67,7 +66,7 @@ class AddStoryActivity : AppCompatActivity() {
             if (isSuccess) {
                 showImage()
             } else {
-                showSnackbar("No photos were captured")
+                showSnackbar(getString(R.string.no_photos_were_captured))
                 currentImageUri = null
             }
         }
@@ -100,6 +99,11 @@ class AddStoryActivity : AppCompatActivity() {
         currentImageUri?.let {
             binding.addStoryComponent.addStoryImageView.setImageURI(it)
         }
+    }
+
+    private fun setupLocationClient() {
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        enableLocation()
     }
 
     private fun enableLocation() {
@@ -142,7 +146,7 @@ class AddStoryActivity : AppCompatActivity() {
                 }
 
                 else -> {
-                    showToast("Permission denied")
+                    showToast(getString(R.string.permission_denied))
                 }
             }
         }
@@ -163,7 +167,7 @@ class AddStoryActivity : AppCompatActivity() {
                     currentLat = location.latitude
                     currentLon = location.longitude
                 } else {
-                    showToast("Location is not found. Try Again")
+                    showToast(getString(R.string.location_not_found))
                 }
             }
         }
@@ -186,7 +190,6 @@ class AddStoryActivity : AppCompatActivity() {
     private fun handleError(error: String) {
         showLoading(false)
         showSnackbar(error)
-        Log.e("AddStoryActivity", "uploadStory: $error")
     }
 
     private fun setupToolbar() {
@@ -220,11 +223,6 @@ class AddStoryActivity : AppCompatActivity() {
             message,
             Snackbar.LENGTH_SHORT
         ).show()
-    }
-
-    private fun setupLocationClient() {
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        enableLocation()
     }
 
     override fun onSupportNavigateUp(): Boolean {

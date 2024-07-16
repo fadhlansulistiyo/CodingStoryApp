@@ -41,4 +41,8 @@
     <string name="retry">Try Again</string>
     <string name="scroll_to_top">Scroll to Top</string>
     <string name="there_is_a_new_story">There is a New Story!</string>
+    <string name="no_media_selected">No Media Selected</string>
+    <string name="no_photos_were_captured">No photos were captured</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="location_not_found">Location is not found. Try Again</string>
 </resources>

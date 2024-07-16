@@ -25,11 +25,6 @@ class DetailStoriesActivity : AppCompatActivity() {
         ViewModelFactory.getInstance(this)
     }
 
-    companion object {
-        const val EXTRA_ID = "extra_id"
-        const val EXTRA_NAME = "extra_name"
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -108,5 +103,10 @@ class DetailStoriesActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    companion object {
+        const val EXTRA_ID = "extra_id"
+        const val EXTRA_NAME = "extra_name"
     }
 }
