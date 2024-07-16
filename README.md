@@ -1,4 +1,4 @@
-# Dicoding Stories Sharing App
+# Coding Story App
 
 This is an Android application designed for sharing stories from the Dicoding academy. The application retrieves data using the Dicoding API and integrates various modern Android development technologies.
 
