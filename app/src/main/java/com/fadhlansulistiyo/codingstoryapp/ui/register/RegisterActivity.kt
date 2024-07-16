@@ -2,7 +2,6 @@ package com.fadhlansulistiyo.codingstoryapp.ui.register
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -20,7 +19,6 @@ import com.fadhlansulistiyo.codingstoryapp.ui.login.LoginActivity
 import com.fadhlansulistiyo.codingstoryapp.ui.util.EmailValidator
 import com.fadhlansulistiyo.codingstoryapp.ui.util.PasswordValidator
 import com.fadhlansulistiyo.codingstoryapp.ui.util.isValidEmail
-import com.google.android.material.snackbar.Snackbar
 
 class RegisterActivity : AppCompatActivity() {
 
