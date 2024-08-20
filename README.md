@@ -1,12 +1,8 @@
+![App Screenshot](screenshots/main_banner.png)
+
 # Coding Story App
 
 This is an Android application designed for sharing stories from the Dicoding academy. The application retrieves data using the Dicoding API and integrates various modern Android development technologies.
-
-## Application Demo
-
-Here are some screenshots demonstrating the application features:
-
-<img src="screenshots/login.png" alt="Login" width="250"/> <img src="screenshots/register.png" alt="Register" width="250"/> <img src="screenshots/home.png" alt="Home Screen" width="250"/> <img src="screenshots/detail.png" alt="Detail Screen" width="250"/> <img src="screenshots/add_story.png" alt="Add Story" width="250"/> <img src="screenshots/add_story_from_camera.png" alt="Add Story" width="250"/> <img src="screenshots/add_story_from_gallery.png" alt="Add Story" width="250"/> <img src="screenshots/maps_stories.png" alt="Add Story" width="250"/>
 
 ## Features
 
@@ -22,13 +18,10 @@ Here are some screenshots demonstrating the application features:
 - **Coroutines**: Manages asynchronous operations using Kotlin Coroutines.
 
 ## Prerequisites
-
 - Android Studio
-- Kotlin
-- Google Cloud Platform API Key for Maps
+- Google Cloud Platform API Key for Maps (optional)
 
-## Getting Started
-
+### Setup Project
 1. **Clone the repository**:
     ```bash
     git clone https://github.com/fadhlansulistiyo/CodingStoryApp.git
@@ -41,17 +34,9 @@ Here are some screenshots demonstrating the application features:
       MAPS_API_KEY=your_api_key_here
       ```
 
-3. **Open the project in Android Studio**:
-    - Import the project into Android Studio.
-    - Sync the project to ensure all dependencies are downloaded.
+3. **Build and Run the project**
 
-4. **Build and Run the project**:
-    - Connect an Android device or start an emulator.
-    - Click on the "Run" button in Android Studio.
-
-## Dependencies
-
-The project uses the following dependencies:
+## Tech Stack
 
 - **Material Design Components**: `com.google.android.material:material`
 - **Room Database**: `androidx.room:room-runtime`, `androidx.room:room-ktx`
@@ -63,10 +48,12 @@ The project uses the following dependencies:
 - **FusedLocationProviderClient**: `com.google.android.gms:play-services-location`
 - **Kotlin Coroutines**: `org.jetbrains.kotlinx:kotlinx-coroutines-core`, `org.jetbrains.kotlinx:kotlinx-coroutines-android`
 
-## Acknowledgements
+## Screenshots (Dark Theme)
+![](screenshots/banner1.png)
+![](screenshots/banner2.png)
 
-- [Dicoding Academy](https://www.dicoding.com/)
-- [Google Maps API](https://cloud.google.com/maps-platform/)
+## Acknowledgements
+This project was developed as part of the Final Submission for the [Dicoding](https://www.dicoding.com/academies/352) class - Learn Intermediate Android Application Development (Belajar Pengembangan Aplikasi Android Intermediate). Special thanks to Dicoding for providing comprehensive learning resources and guidance throughout the course.
 
 ## Contact
 
